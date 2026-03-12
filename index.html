@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>דשבורד ניהולי — דוח קריאות 8-12.03.26</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+<style>
+  :root {
+    --primary: #1a3a5c;
+    --primary-light: #2c5f8a;
+    --accent: #e8913a;
+    --accent-soft: #f5c882;
+    --bg: #f0f2f5;
+    --card: #ffffff;
+    --text: #1e293b;
+    --text-muted: #64748b;
+    --border: #e2e8f0;
+    --success: #16a34a;
+    --warning: #f59e0b;
+    --danger: #dc2626;
+    --kpi-shadow: 0 2px 12px rgba(26,58,92,0.08);
+    --card-shadow: 0 1px 8px rgba(0,0,0,0.06);
+    --radius: 12px;
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+
+  body {
+    font-family: 'Segoe UI', Tahoma, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  /* ─── Header ─── */
+  .header {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+    color: #fff;
+    padding: 32px 48px 28px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+  }
+  .header h1 { font-size: 28px; font-weight: 700; letter-spacing: -0.3px; }
+  .header .subtitle { font-size: 14px; opacity: .75; margin-top: 4px; }
+  .header .meta { font-size: 13px; opacity: .6; text-align: left; }
+
+  /* ─── Container ─── */
+  .container { max-width: 1360px; margin: 0 auto; padding: 28px 48px 60px; }
+
+  /* ─── KPI Row ─── */
+  .kpi-row {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 18px;
+    margin-bottom: 32px;
+  }
+  .kpi-card {
+    background: var(--card);
+    border-radius: var(--radius);
+    padding: 22px 24px;
+    box-shadow: var(--kpi-shadow);
+    border-top: 4px solid var(--primary);
+    text-align: center;
+    transition: transform .15s;
+  }
+  .kpi-card:hover { transform: translateY(-2px); }
+  .kpi-card .kpi-value {
+    font-size: 32px;
+    font-weight: 800;
+    color: var(--primary);
+    margin: 6px 0 4px;
+  }
+  .kpi-card .kpi-label {
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.4;
+  }
+  .kpi-card.accent { border-top-color: var(--accent); }
+  .kpi-card.accent .kpi-value { color: var(--accent); }
+  .kpi-card.success { border-top-color: var(--success); }
+  .kpi-card.success .kpi-value { color: var(--success); }
+  .kpi-card.danger { border-top-color: var(--danger); }
+  .kpi-card.danger .kpi-value { color: var(--danger); }
+
+  /* ─── Section Title ─── */
+  .section-title {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--primary);
+    margin: 36px 0 16px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--border);
+  }
+
+  /* ─── Cards / Panels ─── */
+  .card {
+    background: var(--card);
+    border-radius: var(--radius);
+    padding: 28px;
+    box-shadow: var(--card-shadow);
+    margin-bottom: 24px;
+  }
+  .card h3 {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: 16px;
+  }
+
+  /* ─── Grid layouts ─── */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 24px; }
+
+  /* ─── Charts ─── */
+  .chart-wrapper { position: relative; max-height: 380px; }
+  .chart-wrapper canvas { width: 100% !important; }
+
+  /* ─── Funnel ─── */
+  .funnel { display: flex; flex-direction: column; align-items: center; gap: 0; padding: 12px 0; }
+  .funnel-step {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-weight: 700;
+    font-size: 15px;
+    padding: 16px;
+    border-radius: 8px;
+    text-align: center;
+    line-height: 1.4;
+    transition: transform .15s;
+  }
+  .funnel-step:hover { transform: scale(1.03); }
+  .funnel-arrow {
+    font-size: 22px;
+    color: var(--text-muted);
+    margin: 4px 0;
+  }
+  .funnel-step .pct {
+    display: block;
+    font-size: 22px;
+    margin-top: 2px;
+  }
+
+  /* ─── Table ─── */
+  .data-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    font-size: 13.5px;
+  }
+  .data-table thead th {
+    background: var(--primary);
+    color: #fff;
+    padding: 12px 14px;
+    text-align: right;
+    font-weight: 600;
+    position: sticky;
+    top: 0;
+  }
+  .data-table thead th:first-child { border-radius: 0 8px 0 0; }
+  .data-table thead th:last-child  { border-radius: 8px 0 0 0; }
+  .data-table tbody td {
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+  }
+  .data-table tbody tr:hover { background: #f8fafc; }
+  .topic-badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #fff;
+    white-space: nowrap;
+  }
+
+  /* ─── Summary Box ─── */
+  .summary-box {
+    background: linear-gradient(135deg, #f8fafc 0%, #eef2f7 100%);
+    border-right: 5px solid var(--primary);
+    border-radius: var(--radius);
+    padding: 28px 32px;
+    margin-bottom: 24px;
+  }
+  .summary-box h3 {
+    color: var(--primary);
+    font-size: 18px;
+    margin-bottom: 14px;
+  }
+  .summary-box ul {
+    list-style: none;
+    padding: 0;
+  }
+  .summary-box li {
+    position: relative;
+    padding: 6px 20px 6px 0;
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--text);
+  }
+  .summary-box li::before {
+    content: '◀';
+    position: absolute;
+    right: 0;
+    color: var(--accent);
+    font-size: 10px;
+    top: 10px;
+  }
+
+  /* ─── Note ─── */
+  .note {
+    background: #fffbeb;
+    border: 1px solid #fde68a;
+    border-radius: 8px;
+    padding: 14px 18px;
+    font-size: 13px;
+    color: #92400e;
+    margin-bottom: 24px;
+    line-height: 1.6;
+  }
+  .note strong { color: #78350f; }
+
+  /* ─── Tabs for examples ─── */
+  .tabs { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 16px; }
+  .tab-btn {
+    padding: 7px 16px;
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    background: #fff;
+    font-size: 12.5px;
+    cursor: pointer;
+    transition: all .15s;
+    font-family: inherit;
+    color: var(--text);
+  }
+  .tab-btn:hover { background: var(--bg); }
+  .tab-btn.active {
+    background: var(--primary);
+    color: #fff;
+    border-color: var(--primary);
+  }
+  .tab-content { display: none; }
+  .tab-content.active { display: block; }
+
+  .examples-scroll { max-height: 340px; overflow-y: auto; }
+  .examples-scroll::-webkit-scrollbar { width: 6px; }
+  .examples-scroll::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
+
+  /* ─── Footer ─── */
+  .footer {
+    text-align: center;
+    padding: 24px;
+    color: var(--text-muted);
+    font-size: 12px;
+    border-top: 1px solid var(--border);
+    margin-top: 40px;
+  }
+</style>
+</head>
+<body>
+
+<!-- ════════════════ HEADER ════════════════ -->
+<div class="header">
+  <div>
+    <h1>דשבורד ניהולי — דוח קריאות 8-12.03.26</h1>
+    <div class="subtitle">ניתוח פניות לקוחות מתוך הבוט לנציג שירות</div>
+  </div>
+  <div class="meta">
+    <div>נוצר על בסיס דוח: bot03</div>
+    <div>סה״כ רשומות בדוח: 503</div>
+  </div>
+</div>
+
+<div class="container">
+
+<!-- ════════════════ KPI ROW ════════════════ -->
+<div class="kpi-row">
+  <div class="kpi-card">
+    <div class="kpi-label">סך משתמשי הבוט</div>
+    <div class="kpi-value">1,715</div>
+    <div class="kpi-label">בתקופת הדוח</div>
+  </div>
+  <div class="kpi-card accent">
+    <div class="kpi-label">קריאות שנפתחו לנציג</div>
+    <div class="kpi-value">503</div>
+    <div class="kpi-label">סה״כ רשומות בדוח</div>
+  </div>
+  <div class="kpi-card success">
+    <div class="kpi-label">שיעור אי פתיחת קריאה</div>
+    <div class="kpi-value">70.7%</div>
+    <div class="kpi-label">1,212 משתמשים</div>
+  </div>
+  <div class="kpi-card danger">
+    <div class="kpi-label">שיעור פתיחת קריאה</div>
+    <div class="kpi-value">29.3%</div>
+    <div class="kpi-label">503 משתמשים</div>
+  </div>
+  <div class="kpi-card">
+    <div class="kpi-label">הנושא המוביל</div>
+    <div class="kpi-value" style="font-size:18px;">גיבויים וממשקים</div>
+    <div class="kpi-label">128 קריאות (25.4%)</div>
+  </div>
+</div>
+
+<!-- ════════════════ NOTE ════════════════ -->
+<div class="note">
+  <strong>הערה מתודולוגית:</strong>
+  שיעור 70.7% משקף משתמשים שלא פתחו קריאה לנציג שירות מתוך הבוט בתקופת הדוח.
+  זהו מדד של אי פתיחת קריאה — <strong>אינו מדד ודאי לפתרון מלא על ידי הבוט.</strong>
+  בנוסף, עמודת "שאלת הלקוח" בדוח מכילה ניסוח מסוכם של הפנייה ולאו דווקא את לשון הלקוח המקורית.
+</div>
+
+<!-- ════════════════ CHARTS ROW ════════════════ -->
+<div class="grid-2">
+
+  <!-- Bar chart – topics -->
+  <div class="card">
+    <h3>חלוקת קריאות לפי נושאים</h3>
+    <div class="chart-wrapper">
+      <canvas id="topicsChart"></canvas>
+    </div>
+  </div>
+
+  <!-- Doughnut – usage overview -->
+  <div class="card">
+    <h3>תמונת שימוש כללית</h3>
+    <div class="chart-wrapper" style="max-height:340px;display:flex;justify-content:center;">
+      <canvas id="usageChart"></canvas>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════ FUNNEL ════════════════ -->
+<h2 class="section-title">דיאגרמת משפך — ממשתמשי בוט לפתיחת קריאה</h2>
+<div class="card">
+  <div class="funnel">
+    <div class="funnel-step" style="width:90%;background:var(--primary);">
+      כלל משתמשי הבוט<span class="pct">1,715</span>
+    </div>
+    <div class="funnel-arrow">▼</div>
+    <div class="funnel-step" style="width:62%;background:var(--primary-light);">
+      פתחו קריאה לנציג שירות<span class="pct">503 (29.3%)</span>
+    </div>
+    <div class="funnel-arrow">▼</div>
+    <div class="funnel-step" style="width:46%;background:var(--accent);">
+      3 הנושאים המובילים (62.2%)<span class="pct">313 קריאות</span>
+    </div>
+    <div class="funnel-arrow" style="display:flex;gap:40px;justify-content:center;">
+      <span>▼</span><span>▼</span><span>▼</span>
+    </div>
+    <div style="display:flex;gap:14px;width:56%;justify-content:center;">
+      <div class="funnel-step" style="flex:1;background:#3b82f6;font-size:13px;">
+        גיבויים וממשקים<span class="pct">128</span>
+      </div>
+      <div class="funnel-step" style="flex:1;background:#6366f1;font-size:13px;">
+        טכני + הרשאות<span class="pct">93</span>
+      </div>
+      <div class="funnel-step" style="flex:1;background:#8b5cf6;font-size:13px;">
+        מסמכים ומלאי<span class="pct">92</span>
+      </div>
+    </div>
+  </div>
+  <p style="text-align:center;color:var(--text-muted);font-size:13px;margin-top:10px;">
+    שלושת הנושאים המובילים מרכזים יחד 62.2% מכלל הקריאות — מוקדי העומס העיקריים
+  </p>
+</div>
+
+<!-- ════════════════ TOPIC DETAIL TABLE ════════════════ -->
+<h2 class="section-title">פירוט נושאים — כמות ואחוז</h2>
+<div class="card" style="padding:20px;">
+  <table class="data-table" id="topicTable">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>נושא</th>
+        <th>כמות קריאות</th>
+        <th>אחוז מכלל הדוח</th>
+        <th>מד חזותי</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+</div>
+
+<!-- ════════════════ EXAMPLES TABS ════════════════ -->
+<h2 class="section-title">דוגמאות מייצגות לפי נושא</h2>
+<div class="card">
+  <div class="tabs" id="exampleTabs"></div>
+  <div id="exampleContent"></div>
+</div>
+
+<!-- ════════════════ EXECUTIVE SUMMARY ════════════════ -->
+<h2 class="section-title">סיכום ניהולי</h2>
+<div class="summary-box">
+  <h3>תובנות עיקריות מתוך הנתונים</h3>
+  <ul>
+    <li>בתקופת הדוח השתמשו בבוט 1,715 לקוחות, מתוכם 503 (29.3%) פתחו קריאה לנציג שירות.</li>
+    <li>1,212 משתמשים (70.7%) לא פתחו קריאה בתקופת הדוח — מדד חשוב למעבר לשירות אנושי, אך לא מדד ודאי לפתרון מלא.</li>
+    <li>שלושת מוקדי החיכוך המרכזיים: <strong>גיבויים וממשקים</strong> (25.4%), <strong>טכני + הרשאות</strong> (18.5%), <strong>מסמכים ומלאי</strong> (18.3%) — יחד 62.2% מכלל הקריאות.</li>
+    <li>חלק משמעותי מהפניות מנוסח כתיאור תקלה ולא כשאלה ממוקדת — דפוס המקשה על אבחון עצמי מהיר ועלול להוביל להסלמה מוקדמת לנציג.</li>
+    <li>ההזדמנות המרכזית: חיזוק שכבת האבחון הראשונית של הבוט סביב ארבעה מוקדים — קבצים וממשקים, תקלות כניסה, הפקת מסמכים, ונושאי טוקן והקצאה.</li>
+    <li>מומלץ להוסיף תהליך תשאול קצר, עקבי ומובנה בכל מוקד, עם שאלות הבהרה מדויקות לפי הפעולה שהלקוח ניסה לבצע.</li>
+  </ul>
+</div>
+
+<div class="note">
+  <strong>הסתייגות מקצועית:</strong>
+  פתיחת קריאה משקפת חיכוך, מורכבות או צורך בהעברה לנציג — אך אינה מהווה הוכחה לכשל במוצר או לטעות של הבוט.
+  הניתוח משקף את דפוסי הפנייה כפי שתועדו בדוח, ולא בהכרח את לשון הלקוח המקורית.
+</div>
+
+<!-- ════════════════ FOOTER ════════════════ -->
+<div class="footer">
+  דשבורד ניהולי &bull; נבנה על בסיס נתוני דוח קריאות &bull; כל הנתונים מבוססים על הדוח בלבד
+</div>
+
+</div><!-- /container -->
+
+<script>
+// ═══════════════════════════════════════════════
+//  DATA — replace this object for future reports
+// ═══════════════════════════════════════════════
+const DATA = {
+  reportName: "bot03",
+  totalBotUsers: 1715,
+  totalCalls: 503,
+  noCalls: 1212,
+  callRate: 29.3,
+  noCallRate: 70.7,
+
+  topics: [
+    { name: "גיבויים וממשקים", count: 128, pct: 25.4, color: "#1a3a5c" },
+    { name: "טכני + משתמשים והרשאות", count: 93, pct: 18.5, color: "#2c5f8a" },
+    { name: "מסמכים, פריטים וניהול מלאי", count: 92, pct: 18.3, color: "#3b82f6" },
+    { name: "מספר הקצאה, חשבוניות, טוקן ורשות המיסים", count: 59, pct: 11.7, color: "#6366f1" },
+    { name: "הנהלת חשבונות", count: 33, pct: 6.6, color: "#8b5cf6" },
+    { name: "שליחה למייל, חתימה דיגיטלית, הדפסות", count: 30, pct: 6.0, color: "#a78bfa" },
+    { name: "מע\"מ וניכוי במקור", count: 25, pct: 5.0, color: "#e8913a" },
+    { name: "שב\"א ואשראי", count: 20, pct: 4.0, color: "#f59e0b" },
+    { name: "דוחות", count: 11, pct: 2.2, color: "#16a34a" },
+    { name: "כללי ודוקה", count: 9, pct: 1.8, color: "#64748b" },
+    { name: "קבלות תרומה", count: 3, pct: 0.6, color: "#94a3b8" },
+    { name: "פניה ללא שאלה ברורה", count: 0, pct: 0.0, color: "#cbd5e1" }
+  ],
+
+  examples: {
+    "גיבויים וממשקים": [
+      { id: 4, text: "לא מצליחים לבטל קובץ שהופק למע\"מ" },
+      { id: 6, text: "המשתמש שאל לגבי העלאת גיבוי וקובץ PRM." },
+      { id: 7, text: "אשמח לעזרה בגיבויים" },
+      { id: 8, text: "המשתמשת לא מבינה מדוע הפקת קובץ אחיד דורשת ממנה סיסמה רק בחברה אחת, גם לאחר קבלת ההסבר, ומבקשת שיחה טלפונית." },
+      { id: 9, text: "איך ניתן לבצע ייצוא לרו\"ח עבור חברה" }
+    ],
+    "טכני + משתמשים והרשאות": [
+      { id: 3, text: "תחנה במשרד לא מצליחה להתחבר לתוכנה" },
+      { id: 12, text: "מופיעה הודעת שגיאה \"שרת לא פנוי\" עם הכפתורים 'מעבר אל...', 'נסה שנית', 'ביטול'." },
+      { id: 19, text: "פתיחת מודול תשלומים. בחברה אחת עדיין לא נפתחה האפשרות לעבוד עם התשלומים." },
+      { id: 21, text: "המשתמש שאל איך להגדיל את הגופן." },
+      { id: 25, text: "אני לא מצליחה להיכנס לחשבשבת" }
+    ],
+    "מסמכים, פריטים וניהול מלאי": [
+      { id: 10, text: "המשתמש מבקש לקבל הצעת מחיר ולתאם התקנה של חשבשבת על שרת חדש." },
+      { id: 13, text: "המשתמשת צריכה עזרה בהוצאת קבלות לא רגילות עבור שותפות מורכבת." },
+      { id: 22, text: "אני מקבל שגיאה כשאני רוצה לעדכן שערי מטבע. אני לא יכול להוציא חשבוניות" },
+      { id: 32, text: "המשתמש שאל איך להפיק חשבונית מס." },
+      { id: 37, text: "המשתמש מדווח על תקלה בהוצאת חשבונית לחודש פברואר 2026." }
+    ],
+    "מספר הקצאה, חשבוניות, טוקן": [
+      { id: 1, text: "מבקש סיוע בהארכת תוקף טוקן מכיוון שהתוכנה לא מציגה את חלון הארכת הטוקן." },
+      { id: 2, text: "המשתמש רוצה לדעת איך מכינים חשבונית שמקושרת לתעודת משלוח קיימת." },
+      { id: 11, text: "לא מצליח להפיק חשבוניות ישראל. המשתמש שואל אם ייתכן שמספרי ההקצאה נגמרו." },
+      { id: 17, text: "המשתמשת שואלת לגבי תהליך קבלת מספר הקצאה לתוכנה." },
+      { id: 27, text: "מספר הקצאה נגמר." }
+    ],
+    "הנהלת חשבונות": [
+      { id: 14, text: "המשתמש לא מצליח להקליד פקודת יומן." },
+      { id: 33, text: "המשתמשת שואלת כיצד ליצור פקודת יומן אוטומטית." },
+      { id: 45, text: "המשתמש שואל איך לבצע התאמת חשבון." },
+      { id: 49, text: "הנהח מעוניינת לשנות סוג מטבע של כרטיס ספק." },
+      { id: 73, text: "כשאני מסמנת ומעבירה פקודות יומן מהחשבון, אני מגלה שהן לא עוברות." }
+    ],
+    "שליחה למייל, חתימה דיגיטלית, הדפסות": [
+      { id: 15, text: "המשתמש מנסה לשלוח חשבונית במייל מתוך התוכנה אך מקבל הודעת שגיאה." },
+      { id: 20, text: "אני רוצה לשלוח ללקוחות חשבונית עם חתימה דיגיטלית." },
+      { id: 39, text: "המשתמשת רוצה לדעת איך לשלוח את כל המסמכים מהעברה מסוימת כקובץ אחד למייל." },
+      { id: 40, text: "הדפסת ברקוד על מדבקה." },
+      { id: 54, text: "המשתמשת רוצה לשלוח ללקוחות חשבוניות עם חתימה דיגיטלית." }
+    ],
+    "מע\"מ וניכוי במקור": [
+      { id: 16, text: "המשתמשת צריכה עזרה בדיווח 874 בפעם הראשונה." },
+      { id: 23, text: "המשתמש רוצה להפיק דוח מע\"מ לשנה שעברה." },
+      { id: 26, text: "המשתמשת צריכה עזרה בהפקת קובץ 874 בפעם הראשונה." },
+      { id: 125, text: "המשתמש שואל לגבי אופן הפקת דוח מע\"מ, 874PCN, בתוכנת חשבשבת." },
+      { id: 130, text: "בשידור PCN לראשונה הופיעו כל ה-Z בסכום אחד ב-31.1.26." }
+    ],
+    "שב\"א ואשראי": [
+      { id: 58, text: "אני עושה חיוב בכרטיס אשראי אוטומטי בחוזה לכל הלקוחות ביחד, בדרך כלל הכל עובר עכשיו זה נותן שגיאה." },
+      { id: 81, text: "חוייב האשראי והלקוח עדיין חייב" },
+      { id: 89, text: "צריכה עזרה בהתאמות כרטיסי אשראי" },
+      { id: 107, text: "המשתמשת ביצעה החזר חלקי ללקוחה באשראי, אך הקבלה יצאה על הסכום המלא." },
+      { id: 119, text: "מנסה לחייב באשראי וזה כותב לי תקלה כללית נא לפנות לשב\"א, 255" }
+    ],
+    "דוחות": [
+      { id: 59, text: "רווח והפסד 2024 לא רושם הכנסות וקניות סחורה" },
+      { id: 61, text: "יש לי דוח קיים באשף דוחות ואני צריכה להוסיף לו חלוקה לפי קוד מיון." },
+      { id: 109, text: "המאזן לא מאוזן. המשתמשת ניסתה לפעול לפי ההנחיות שקיבלה אך לא הצליחה." },
+      { id: 112, text: "המשתמש שואל איך להוסיף קוד מאזן עבור הון עצמי." },
+      { id: 224, text: "צריכה לשנות תאריכים בדוח וזה לא נותן לי" }
+    ],
+    "כללי ודוקה": [
+      { id: 5, text: "לא ניתן למצוא מיקום M בחשבשבת והכל תקין אצלי" },
+      { id: 85, text: "פתיחת אינדקס לקודי מיון ל-6 ספרות" },
+      { id: 87, text: "נפתח חלון: דרייבר=סול סרבר, בטל או התעלם, תקוע" },
+      { id: 88, text: "הפיכת אינדקס לשש ספרות" },
+      { id: 202, text: "המידע לא מעודכן אצלי במחשב" }
+    ],
+    "קבלות תרומה": [
+      { id: 48, text: "תקלה 403 לא התקבלה מספר הקצאה בקבלה תרומה" },
+      { id: 195, text: "כיצד מנפיקים קבלה לתרומה בשווה כסף / שוברים" },
+      { id: 338, text: "מופיעה תקלה 403 בעת הפקת קבלת תרומה, לא התקבל מספר הקצאה." }
+    ]
+  }
+};
+
+// ═══════════════════════════════════════════════
+//  RENDER FUNCTIONS
+// ═══════════════════════════════════════════════
+
+// ── Topics Bar Chart ──
+function renderTopicsChart() {
+  const filtered = DATA.topics.filter(t => t.count > 0);
+  new Chart(document.getElementById('topicsChart'), {
+    type: 'bar',
+    data: {
+      labels: filtered.map(t => t.name.length > 28 ? t.name.substring(0,26)+'…' : t.name),
+      datasets: [{
+        data: filtered.map(t => t.count),
+        backgroundColor: filtered.map(t => t.color),
+        borderRadius: 6,
+        barThickness: 28
+      }]
+    },
+    options: {
+      indexAxis: 'y',
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          rtl: true,
+          textDirection: 'rtl',
+          callbacks: {
+            title: (items) => DATA.topics.filter(t=>t.count>0)[items[0].dataIndex].name,
+            label: (item) => {
+              const t = DATA.topics.filter(t=>t.count>0)[item.dataIndex];
+              return `${t.count} קריאות (${t.pct}%)`;
+            }
+          }
+        }
+      },
+      scales: {
+        x: {
+          beginAtZero: true,
+          grid: { color: '#f1f5f9' },
+          ticks: { font: { size: 12 } }
+        },
+        y: {
+          grid: { display: false },
+          ticks: { font: { size: 12 }, mirror: false }
+        }
+      }
+    }
+  });
+}
+
+// ── Usage Doughnut ──
+function renderUsageChart() {
+  new Chart(document.getElementById('usageChart'), {
+    type: 'doughnut',
+    data: {
+      labels: ['פתחו קריאה (503)', 'לא פתחו קריאה (1,212)'],
+      datasets: [{
+        data: [DATA.totalCalls, DATA.noCalls],
+        backgroundColor: ['#e8913a', '#1a3a5c'],
+        borderWidth: 3,
+        borderColor: '#fff'
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      cutout: '58%',
+      plugins: {
+        legend: {
+          position: 'bottom',
+          rtl: true,
+          labels: { font: { size: 13 }, padding: 18, usePointStyle: true, pointStyleWidth: 14 }
+        },
+        tooltip: {
+          rtl: true,
+          textDirection: 'rtl',
+          callbacks: {
+            label: (item) => {
+              const pct = item.dataIndex === 0 ? DATA.callRate : DATA.noCallRate;
+              return `${item.label}: ${pct}%`;
+            }
+          }
+        }
+      }
+    },
+    plugins: [{
+      id: 'centerText',
+      afterDraw(chart) {
+        const { ctx, chartArea: { width, height, top, left } } = chart;
+        ctx.save();
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        const cx = left + width / 2;
+        const cy = top + height / 2 - 10;
+        ctx.font = 'bold 30px Segoe UI';
+        ctx.fillStyle = '#1a3a5c';
+        ctx.fillText('1,715', cx, cy);
+        ctx.font = '13px Segoe UI';
+        ctx.fillStyle = '#64748b';
+        ctx.fillText('סה״כ משתמשים', cx, cy + 26);
+        ctx.restore();
+      }
+    }]
+  });
+}
+
+// ── Topic Detail Table ──
+function renderTopicTable() {
+  const tbody = document.querySelector('#topicTable tbody');
+  DATA.topics.forEach((t, i) => {
+    const barW = t.count > 0 ? Math.max((t.count / DATA.topics[0].count) * 100, 4) : 0;
+    tbody.innerHTML += `
+      <tr>
+        <td style="font-weight:600;color:var(--text-muted);">${i+1}</td>
+        <td><span class="topic-badge" style="background:${t.color}">${t.name}</span></td>
+        <td style="font-weight:700;">${t.count}</td>
+        <td>${t.pct}%</td>
+        <td style="width:180px;">
+          <div style="background:#f1f5f9;border-radius:4px;height:18px;overflow:hidden;">
+            <div style="width:${barW}%;height:100%;background:${t.color};border-radius:4px;transition:width .3s;"></div>
+          </div>
+        </td>
+      </tr>`;
+  });
+}
+
+// ── Examples Tabs ──
+function renderExamples() {
+  const tabsEl = document.getElementById('exampleTabs');
+  const contentEl = document.getElementById('exampleContent');
+  const keys = Object.keys(DATA.examples);
+
+  keys.forEach((key, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'tab-btn' + (i === 0 ? ' active' : '');
+    btn.textContent = key;
+    btn.onclick = () => switchTab(i);
+    tabsEl.appendChild(btn);
+
+    const div = document.createElement('div');
+    div.className = 'tab-content' + (i === 0 ? ' active' : '');
+    div.id = 'tab-' + i;
+    const rows = DATA.examples[key];
+    const topicObj = DATA.topics.find(t => t.name === key || key.startsWith(t.name.substring(0,12)));
+    const topicCount = topicObj ? topicObj.count : '';
+    div.innerHTML = `
+      <p style="font-size:13px;color:var(--text-muted);margin-bottom:10px;">
+        ${key} — ${topicCount ? topicCount + ' קריאות' : ''} (מוצגות עד 5 דוגמאות מייצגות)
+      </p>
+      <div class="examples-scroll">
+        <table class="data-table">
+          <thead><tr><th style="width:60px;">#</th><th style="width:70px;">מזהה</th><th>שאלת / תיאור הלקוח</th></tr></thead>
+          <tbody>
+            ${rows.map((r, j) => `<tr><td>${j+1}</td><td>${r.id}</td><td>${r.text}</td></tr>`).join('')}
+          </tbody>
+        </table>
+      </div>`;
+    contentEl.appendChild(div);
+  });
+}
+
+function switchTab(index) {
+  document.querySelectorAll('.tab-btn').forEach((b,i) => b.classList.toggle('active', i===index));
+  document.querySelectorAll('.tab-content').forEach((c,i) => c.classList.toggle('active', i===index));
+}
+
+// ═══════════════════════════════════════════════
+//  INIT
+// ═══════════════════════════════════════════════
+document.addEventListener('DOMContentLoaded', () => {
+  renderTopicsChart();
+  renderUsageChart();
+  renderTopicTable();
+  renderExamples();
+});
+</script>
+</body>
+</html>
