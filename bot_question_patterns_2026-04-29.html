@@ -25,8 +25,6 @@ body{font-family:'Heebo',sans-serif;background:var(--bg);color:var(--text);font-
 .header h1{font-size:28px;font-weight:800;line-height:1.2}
 .header .sub{font-size:14px;opacity:.85;margin-top:6px}
 .header .meta{font-size:13px;opacity:.75;margin-top:10px}
-.back-btn{background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.3);color:#fff;padding:8px 16px;border-radius:20px;font-size:13px;text-decoration:none;font-family:inherit;transition:all .2s}
-.back-btn:hover{background:rgba(255,255,255,.28)}
 
 /* TL;DR */
 .tldr{background:linear-gradient(135deg,#fef3c7 0%,#fffbeb 100%);border:1px solid #fcd34d;border-right:5px solid var(--warning);border-radius:var(--radius);padding:24px 28px;margin-bottom:22px;box-shadow:var(--shadow)}
@@ -73,12 +71,16 @@ table.summary-table .row-other td{background:#f1f5f9!important;color:var(--text-
 .toc-list a .toc-num{font-weight:700;color:var(--text-muted);min-width:24px}
 .toc-list a .toc-cnt{font-size:11.5px;font-weight:600;color:var(--text-muted);background:#f1f5f9;padding:1px 8px;border-radius:8px;white-space:nowrap}
 
-/* CLUSTER CARDS */
-.cluster{background:#fff;border-radius:var(--radius);box-shadow:var(--shadow);padding:24px 28px;margin-bottom:18px;border-right:5px solid var(--primary-light);scroll-margin-top:20px}
+/* CLUSTER CARDS — collapsible: headers always shown, body expands on click */
+.cluster{background:#fff;border-radius:var(--radius);box-shadow:var(--shadow);margin-bottom:10px;border-right:5px solid var(--primary-light);scroll-margin-top:20px;overflow:hidden;transition:box-shadow .2s}
 .cluster.rank-1{border-right-color:var(--danger)}
 .cluster.rank-2{border-right-color:var(--accent)}
 .cluster.rank-3{border-right-color:var(--warning)}
-.cluster-head{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;flex-wrap:wrap;margin-bottom:14px;padding-bottom:14px;border-bottom:1px solid var(--border)}
+.cluster:hover{box-shadow:var(--shadow-lg)}
+.cluster-head{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;flex-wrap:wrap;padding:20px 24px 14px;cursor:pointer;user-select:none;transition:background .15s}
+.cluster-head:hover{background:#f8fafc}
+.cluster-toggle{font-size:14px;color:var(--text-muted);transition:transform .25s;flex-shrink:0;line-height:1;align-self:center;padding:6px 8px}
+.cluster.open .cluster-toggle{transform:rotate(180deg);color:var(--accent)}
 .cluster-head .title-block{flex:1;min-width:260px}
 .cluster-head .rank-num{display:inline-block;background:var(--primary);color:#fff;font-weight:900;font-size:14px;padding:4px 10px;border-radius:8px;margin-left:10px}
 .cluster.rank-1 .rank-num{background:var(--danger)}
@@ -89,13 +91,14 @@ table.summary-table .row-other td{background:#f1f5f9!important;color:var(--text-
 .cluster-head .count{font-size:32px;font-weight:900;color:var(--primary);line-height:1}
 .cluster-head .pct{font-size:13px;color:var(--text-muted);margin-top:2px}
 
-.cluster-meta{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px}
+.cluster-meta{display:flex;flex-wrap:wrap;gap:8px;padding:0 24px 16px;margin:0}
 .meta-tag{display:inline-flex;align-items:center;gap:6px;padding:5px 12px;border-radius:18px;font-size:12px;font-weight:600;background:#f1f5f9;color:var(--text-muted)}
 .meta-tag.weeks{background:#e0e7ff;color:#4338ca}
 .meta-tag.topic{background:#fef3c7;color:#92400e}
 .meta-tag .meta-label{opacity:.7;font-weight:500}
 
-.cluster-section{margin-top:18px}
+.cluster-section{display:none;padding:14px 28px 4px;margin:0;border-top:1px solid var(--border)}
+.cluster.open .cluster-section{display:block}
 .cluster-section h4{font-size:13px;font-weight:700;color:var(--primary);margin-bottom:10px;text-transform:uppercase;letter-spacing:1px;display:flex;align-items:center;gap:8px}
 .cluster-section h4::before{content:'';display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--accent)}
 
@@ -153,14 +156,13 @@ table.summary-table .row-other td{background:#f1f5f9!important;color:var(--text-
       <div class="sub">תעדוף מבוסס נתונים לאימון הבוט — מבוסס על 4 שבועות של ניתוח QA וסיווג נושאים</div>
       <div class="meta">תקופה: 22-26.3.26 → 26-29.4.26 · 4 שבועות נותחו · 327 שיחות בעיתיות (אחרי סינון out-of-scope) · 17 דפוסים מובילים זוהו</div>
     </div>
-    <a class="back-btn" href="dashboard.html" title="חזרה לדשבורד הראשי">→ חזרה לדשבורד</a>
   </div>
 </div>
 
-<!-- TL;DR -->
+<!-- TOP PATTERNS -->
 <div class="tldr">
-  <h2>⚡ TL;DR למנכ"ל / סמנכ"ל</h2>
-  <div class="summary">3 דפוסים מובילים = 38% מכלל הבעיות בטווח האימון. השקעה ממוקדת בהם תוריד דרמטית את כשלי הבוט.</div>
+  <h2>⚡ דפוסים מובילים</h2>
+  <div class="summary">3 דפוסים = 38% מכלל הבעיות בטווח האימון. השקעה ממוקדת בהם תוריד דרמטית את כשלי הבוט.</div>
   <div class="tldr-list">
     <div class="tldr-row">
       <div class="rank">1</div>
@@ -181,7 +183,7 @@ table.summary-table .row-other td{background:#f1f5f9!important;color:var(--text-
 </div>
 
 <!-- SUMMARY TABLE -->
-<div class="section-title">📊 תקציר למנהל מוצר — כל הדפוסים</div>
+<div class="section-title">📊 כל הדפוסים — סיכום</div>
 <div class="summary-table-wrap">
   <table class="summary-table">
     <thead>
@@ -243,8 +245,8 @@ table.summary-table .row-other td{background:#f1f5f9!important;color:var(--text-
   </ul>
 </div>
 
-<!-- DETAILED CLUSTERS -->
-<div class="section-title">📋 פירוט מלא למאמן בוט</div>
+<!-- DETAILED CLUSTERS — collapsed by default; click a header to expand -->
+<div class="section-title">📋 פירוט הדפוסים <span style="font-size:13px;font-weight:500;color:var(--text-muted);margin-right:10px">(לחץ על דפוס כדי לפתוח)</span></div>
 
 <div class="cluster rank-1" id="c1">
   <div class="cluster-head">
@@ -822,5 +824,42 @@ table.summary-table .row-other td{background:#f1f5f9!important;color:var(--text-
 </div>
 
 </div>
+
+<script>
+// Inject toggle indicators + click handler on each cluster card
+document.querySelectorAll('.cluster').forEach(card => {
+  const head = card.querySelector('.cluster-head');
+  if (!head) return;
+  const toggle = document.createElement('span');
+  toggle.className = 'cluster-toggle';
+  toggle.textContent = '▼';
+  head.appendChild(toggle);
+  head.addEventListener('click', () => card.classList.toggle('open'));
+});
+
+// Summary table rows: click → scroll to cluster + open it
+document.querySelectorAll('.summary-table tbody tr[onclick]').forEach(row => {
+  const onclick = row.getAttribute('onclick') || '';
+  const match = onclick.match(/getElementById\('([^']+)'\)/);
+  if (!match) return;
+  const targetId = match[1];
+  row.removeAttribute('onclick');
+  row.addEventListener('click', () => {
+    const target = document.getElementById(targetId);
+    if (!target) return;
+    if (target.classList.contains('cluster')) target.classList.add('open');
+    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+});
+
+// TOC links: also open the target cluster (in addition to the default anchor scroll)
+document.querySelectorAll('.toc-list a[href^="#"]').forEach(link => {
+  link.addEventListener('click', () => {
+    const targetId = link.getAttribute('href').substring(1);
+    const target = document.getElementById(targetId);
+    if (target && target.classList.contains('cluster')) target.classList.add('open');
+  });
+});
+</script>
 </body>
 </html>
