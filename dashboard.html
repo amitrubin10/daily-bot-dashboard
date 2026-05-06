@@ -148,6 +148,19 @@ tbody tr:hover td{background:#f8fafc}
 .insights-section ul{padding-right:22px;margin-bottom:8px}
 .insights-section ul li{font-size:13.5px;line-height:1.7;margin-bottom:4px}
 
+/* RECURRING PATTERNS CARD */
+.patterns-card{background:linear-gradient(135deg,#fef3c7 0%,#fffbeb 100%);border:1px solid #fcd34d;border-right:4px solid #f59e0b;border-radius:var(--radius);padding:20px 24px;margin-bottom:18px}
+.patterns-card h3{font-size:15px;font-weight:800;color:#78350f;margin-bottom:6px;display:flex;align-items:center;gap:8px;border-bottom:none;padding-bottom:0}
+.patterns-card .subtitle{font-size:12px;color:#92400e;margin-bottom:14px;font-style:italic}
+.patterns-list{display:flex;flex-direction:column;gap:8px;margin-bottom:14px}
+.patterns-row{display:grid;grid-template-columns:30px 1fr 90px;align-items:center;gap:12px;padding:10px 14px;background:#fff;border-radius:8px;border:1px solid #fde68a}
+.patterns-row .rank{font-size:18px;font-weight:900;color:#f59e0b;text-align:center}
+.patterns-row .label{font-size:13.5px;font-weight:600;color:#78350f;line-height:1.4}
+.patterns-row .count{text-align:left;font-size:14px;font-weight:800;color:#b45309;white-space:nowrap}
+.patterns-footer{display:flex;justify-content:space-between;align-items:center;font-size:12px;color:#92400e;padding-top:10px;border-top:1px dashed #fcd34d}
+.patterns-link{display:inline-flex;align-items:center;gap:6px;background:#f59e0b;color:#fff;padding:6px 14px;border-radius:18px;text-decoration:none;font-weight:700;font-size:12.5px;transition:all .15s}
+.patterns-link:hover{background:#b45309;transform:translateY(-1px)}
+
 /* GREEN CORRECT-REDIRECT TAB — visually separated from the red/dark topic tabs */
 .tab-btn.redirect-tab{margin-right:18px;padding-right:14px;border-right:none;background:#dcfce7;color:#16a34a;border-color:#86efac;font-weight:700;position:relative}
 .tab-btn.redirect-tab::before{content:'';position:absolute;right:-13px;top:4px;bottom:4px;width:2px;background:var(--border);border-radius:1px}
@@ -270,6 +283,9 @@ tbody tr:hover td{background:#f8fafc}
 <div class="section-title">📝 סיכום ניהולי</div>
 <div class="card exec-summary" id="execSummary"></div>
 
+<!-- RECURRING PATTERNS — top 3 from the monthly cross-week analysis -->
+<div class="patterns-card" id="patternsCard"></div>
+
 <!-- TRAINING INSIGHTS -->
 <div class="section-title">🎓 תובנות פרקטיות לאימון הבוט</div>
 <div class="card" id="trainingInsights"></div>
@@ -359,6 +375,21 @@ const DATA = {
     { name: "כללי ודוקה", count: 1, pct: 8.3 },
     { name: 'שב"א ואשראי', count: 1, pct: 8.3 }
   ],
+
+  // Recurring patterns — top 3 from cross-week analysis. Source: bot_question_patterns_<date>.md
+  patterns: {
+    file: "bot_question_patterns_2026-04-29.md",
+    period: "22-26.3.26 → 26-29.4.26",
+    weeksAnalyzed: 4,
+    totalProblematic: 327,
+    totalClusters: 17,
+    top3SharePct: 38,
+    top3: [
+      { rank: 1, label: "קודי שגיאה ברשות המיסים — 403/406/400/401/430/422/318", count: 41, trend: "מחמיר" },
+      { rank: 2, label: "תקלות בקליטת דפי בנק וקבצי בנק",                          count: 38, trend: "יציב"  },
+      { rank: 3, label: 'הודעות "תחנה אחרת" / נעילות קובץ',                         count: 25, trend: "מחמיר" }
+    ]
+  },
 
   // 4-week history. Older weeks have null for new scope-aware metrics (operationalSuccessRate, correctRedirects)
   // because scope reclassification wasn't applied at the time. The current week (26-29.4.26) has all values.
@@ -793,6 +824,29 @@ function renderExecSummary(){
   document.getElementById('execSummary').innerHTML = DATA.executiveSummary.map(p=>`<p>${p}</p>`).join('');
 }
 
+function renderPatterns(){
+  const p = DATA.patterns;
+  if(!p || !p.top3 || p.top3.length === 0){
+    document.getElementById('patternsCard').style.display = 'none';
+    return;
+  }
+  const trendEmoji = t => t === 'מחמיר' ? '🔺' : t === 'משתפר' ? '🔻' : t === 'חדש' ? '✨' : '◆';
+  const rows = p.top3.map(r => `
+    <div class="patterns-row">
+      <div class="rank">#${r.rank}</div>
+      <div class="label">${r.label} <span style="font-size:11px;color:#92400e;font-weight:500">${trendEmoji(r.trend)} ${r.trend}</span></div>
+      <div class="count">${r.count} שיחות</div>
+    </div>`).join('');
+  document.getElementById('patternsCard').innerHTML = `
+    <h3>🔁 דפוסי שאלה חוזרים — חודש אחרון</h3>
+    <div class="subtitle">${p.weeksAnalyzed} שבועות נותחו (${p.period}) · ${p.totalProblematic} שיחות בעיתיות (אחרי סינון out-of-scope) · ${p.totalClusters} דפוסים זוהו</div>
+    <div class="patterns-list">${rows}</div>
+    <div class="patterns-footer">
+      <span>3 דפוסים מובילים = ${p.top3SharePct}% מהבעיות בטווח האימון</span>
+      <a class="patterns-link" href="${p.file}" target="_blank" title="פתח את הניתוח המלא עם דוגמאות והמלצות אימון">📋 פירוט מלא והמלצות אימון →</a>
+    </div>`;
+}
+
 function renderTrainingInsights(){
   const sections = DATA.trainingInsights.map(s=>{
     let body = '';
@@ -1008,6 +1062,7 @@ document.addEventListener('DOMContentLoaded', () => {
   renderQualityTrend();
   renderTabs();
   renderExecSummary();
+  renderPatterns();
   renderTrainingInsights();
 
   // Tab switching
