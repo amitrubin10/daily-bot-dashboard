@@ -1,0 +1,1009 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>דפוסי שאלה חוזרים — חודש אחרון | חשבשבת</title>
+  <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root{--primary:#1a3a5c;--pl:#2a5a8c;--accent:#e8913a;--success:#16a34a;--warn:#f59e0b;--danger:#dc2626;--bg:#f4f7fb;--card:#fff;--bdr:#dce4ef;--txt:#1e2a38;--txt2:#5a6a7a;--font:'Heebo',sans-serif}
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:var(--font);background:var(--bg);color:var(--txt);font-size:15px;line-height:1.6}
+    .wrap{max-width:1120px;margin:0 auto;padding:24px 16px 60px}
+    .header{background:linear-gradient(135deg,#1a3a5c,#2a6ea6);color:#fff;border-radius:14px;padding:30px 36px;margin-bottom:24px}
+    .header h1{font-size:26px;font-weight:800;margin-bottom:6px}
+    .header .sub{font-size:13px;opacity:.8}
+    .tldr{background:#fffbf0;border:2px solid #f5d78e;border-radius:14px;padding:22px 26px;margin-bottom:24px}
+    .tldr h2{font-size:17px;font-weight:800;color:#8a6000;margin-bottom:14px}
+    .tldr-list{display:flex;gap:14px;flex-wrap:wrap}
+    .tldr-card{flex:1;min-width:190px;background:#fff;border-radius:10px;padding:14px;border-right:4px solid}
+    .tldr-card.rank-1-bg{border-color:var(--danger)}.tldr-card.rank-2-bg{border-color:var(--accent)}.tldr-card.rank-3-bg{border-color:var(--warn)}
+    .tldr-rank{font-size:22px;font-weight:900;color:var(--primary);margin-bottom:4px}
+    .tldr-label{font-size:13px;font-weight:600;margin-bottom:6px;line-height:1.4}
+    .tldr-count{font-size:18px;font-weight:800;color:var(--pl);display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+    .alarm-box{background:#fff5f5;border:1px solid #fca5a5;border-radius:10px;padding:16px 20px;margin-bottom:24px}
+    .alarm-box h3{font-size:14px;font-weight:700;color:var(--danger);margin-bottom:8px}
+    .alarm-box ul{margin-right:18px;font-size:13px;line-height:2}
+    .sec-title{font-size:17px;font-weight:700;color:var(--primary);margin:24px 0 12px;padding-bottom:7px;border-bottom:2px solid var(--bdr)}
+    .tbl-wrap{background:var(--card);border-radius:12px;border:1px solid var(--bdr);overflow:hidden;margin-bottom:24px;box-shadow:0 2px 8px rgba(0,0,0,.05)}
+    .tbl{width:100%;border-collapse:collapse}
+    .tbl th{background:var(--primary);color:#fff;padding:11px 13px;font-size:13px;text-align:right}
+    .tbl td{padding:9px 13px;font-size:13px;border-bottom:1px solid var(--bdr)}
+    .tbl tr:hover{background:#f0f5ff;cursor:pointer}
+    .tbl .other-row td{color:var(--txt2);font-style:italic}
+    .tbl .other-row:hover{background:#f8f8f8;cursor:default}
+    .rank-cell{font-weight:700;color:var(--primary);width:38px}
+    .count-cell{font-weight:700;color:var(--danger);text-align:center;width:55px}
+    .pct-cell{color:var(--txt2);text-align:center;width:50px}
+    .trend-cell{width:100px}
+    .spark-cell{width:70px;text-align:center}
+    .toc-card{background:var(--card);border-radius:12px;border:1px solid var(--bdr);padding:18px 22px;margin-bottom:24px}
+    .toc-card h3{font-size:14px;font-weight:700;color:var(--primary);margin-bottom:10px}
+    .toc-grid{display:grid;grid-template-columns:1fr 1fr;gap:5px 20px}
+    .toc-link{font-size:12px;color:var(--pl);cursor:pointer;padding:2px 0;text-decoration:underline}
+    .toc-link:hover{color:var(--accent)}
+    .cluster{background:var(--card);border-radius:12px;border:1px solid var(--bdr);border-right:5px solid var(--pl);margin-bottom:14px;box-shadow:0 2px 8px rgba(0,0,0,.04);overflow:hidden}
+    .cluster.rank-1{border-right-color:var(--danger)}.cluster.rank-2{border-right-color:var(--accent)}.cluster.rank-3{border-right-color:var(--warn)}
+    .cluster-head{display:flex;justify-content:space-between;align-items:flex-start;padding:16px 20px;cursor:pointer;user-select:none}
+    .cluster-head:hover{background:#f8f9ff}
+    .title-block{display:flex;align-items:flex-start;gap:10px;flex:1}
+    .rank-num{font-size:20px;font-weight:900;color:var(--primary);min-width:34px}
+    .title-block h2{font-size:15px;font-weight:700;line-height:1.4}
+    .right-block{display:flex;align-items:center;gap:12px}
+    .spark-wrap{opacity:.85}
+    .count-block{text-align:center;min-width:60px}
+    .count-block .count{font-size:28px;font-weight:900;color:var(--primary)}
+    .count-block .pct{font-size:11px;color:var(--txt2)}
+    .cluster-meta{display:flex;flex-wrap:wrap;gap:7px;padding:0 20px 13px;align-items:center}
+    .meta-tag{background:#eef2f8;border-radius:20px;padding:3px 11px;font-size:12px}
+    .meta-label{font-weight:600;color:var(--primary)}
+    .trend{border-radius:20px;padding:3px 11px;font-size:12px;font-weight:600;white-space:nowrap}
+    .trend-getting-worse{background:#fef2f2;color:var(--danger)}
+    .trend-stable{background:#f0f0f0;color:#555}
+    .trend-improving{background:#f0fdf4;color:var(--success)}
+    .trend-new{background:#fffbeb;color:#92400e}
+    .week-detail{display:flex;gap:5px;flex-wrap:wrap;margin-top:2px}
+    .wk-chip{background:#e8f0fe;color:#1a5cb4;border-radius:12px;padding:2px 8px;font-size:11px}
+    .cluster-section{padding:0 20px 16px;display:none}
+    .cluster.open .cluster-section{display:block}
+    .cluster-section h4{font-size:12px;font-weight:700;color:var(--primary);margin-bottom:7px;text-transform:uppercase;letter-spacing:.4px}
+    .examples-list{display:flex;flex-direction:column;gap:5px}
+    .example{display:flex;align-items:baseline;gap:9px;padding:6px 11px;background:#f8fafd;border-radius:6px;border-right:3px solid var(--bdr);font-size:13px}
+    .ex-id{font-size:10px;color:#999;font-family:monospace;min-width:72px}
+    .ex-week{font-size:11px;background:#e8f0fe;color:#1a5cb4;border-radius:10px;padding:1px 7px;white-space:nowrap}
+    .ex-q{color:var(--txt);line-height:1.4}
+    .bot-answer{background:#f8f8f8;border-right:3px solid #ccc;border-radius:7px;padding:11px 13px;font-size:13px;color:#444;line-height:1.7;white-space:pre-wrap;margin-top:3px}
+    .recommendation{background:#f0fdf4;border:1px solid #86efac;border-radius:8px;padding:13px 15px;font-size:13px;color:#166534;line-height:1.8;margin-top:3px}
+    .recommendation strong{color:#14532d}
+    .toggle-indicator{margin-right:10px;font-size:13px;color:var(--txt2);transition:transform .22s;display:inline-block}
+    .cluster.open .toggle-indicator{transform:rotate(180deg)}
+    .other-bucket{background:var(--card);border-radius:12px;border:1px solid var(--bdr);border-right:5px solid #999;padding:18px 22px;margin-bottom:22px}
+    .other-bucket h3{font-size:15px;font-weight:700;color:#555;margin-bottom:12px}
+    .other-area{margin-bottom:10px}
+    .other-area h4{font-size:12px;font-weight:600;color:var(--txt2);margin-bottom:5px}
+    .other-area ul{margin-right:15px;font-size:13px;color:#555;line-height:1.9}
+    .other-rec{background:#f8fafd;border-radius:7px;padding:11px 13px;font-size:13px;color:var(--txt2);margin-top:12px;border-right:3px solid var(--bdr)}
+    .footer{text-align:center;color:var(--txt2);font-size:12px;margin-top:36px;padding-top:20px;border-top:1px solid var(--bdr)}
+    @media print{.toc-card,.alarm-box{display:none}.toggle-indicator{display:none}.cluster-section{display:block!important}.cluster{page-break-inside:avoid}}
+    @media(max-width:620px){.tldr-list{flex-direction:column}.toc-grid{grid-template-columns:1fr}.cluster-head{flex-direction:column;gap:8px}.spark-cell,.trend-cell{display:none}}
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <div class="header">
+    <h1>📋 דפוסי שאלה חוזרים — חשבשבת</h1>
+    <div class="sub">ניתוח 4 שבועות: 12.4 – 14.5.2026 &nbsp;|&nbsp; סך שיחות בעייתיות: 585 &nbsp;|&nbsp; אשכולות עיקריים: 12</div>
+  </div>
+
+  <div class="tldr">
+    <h2>⚡ דפוסים מובילים</h2>
+    <div class="tldr-list">
+    <div class="tldr-card rank-1-bg">
+      <div class="tldr-rank">#1</div>
+      <div class="tldr-label">מסמכים, פריטים ומלאי — פעולות ספציפיות ועסקאות מיוחדות</div>
+      <div class="tldr-count">89 שיחות <span class="trend trend-stable" style="font-size:11px;padding:2px 7px;margin-right:6px">◆ יציב</span></div>
+    </div>
+    <div class="tldr-card rank-2-bg">
+      <div class="tldr-rank">#2</div>
+      <div class="tldr-label">דוחות — הפקה, שאלות פרוצדוראליות ותקלות</div>
+      <div class="tldr-count">38 שיחות <span class="trend trend-stable" style="font-size:11px;padding:2px 7px;margin-right:6px">◆ יציב</span></div>
+    </div>
+    <div class="tldr-card rank-3-bg">
+      <div class="tldr-rank">#3</div>
+      <div class="tldr-label">ממשק מספר הקצאה — שגיאות 403/406/422 ואי-הופעה</div>
+      <div class="tldr-count">32 שיחות <span class="trend trend-stable" style="font-size:11px;padding:2px 7px;margin-right:6px">◆ יציב</span></div>
+    </div>
+    </div>
+  </div>
+
+  <div class="alarm-box">
+    <h3>🔺 דפוסים מחמירים — עלייה בשבוע האחרון</h3>
+    <ul><li><strong>הדפסות ושליחה — תקלות PDF, מדפסת ומייל</strong> — 10→3→6→<strong style="color:#dc2626">9</strong></li><li><strong>ייבוא ממקורות חיצוניים — hyp, ארדני, קראדקום, מודו</strong> — 3→1→4→<strong style="color:#dc2626">13</strong></li><li><strong>קליטת דפי בנק — שגיאות פורמט, אי-רציפות, פרמטרים</strong> — 3→0→1→<strong style="color:#dc2626">14</strong></li><li><strong>מסב — ייצור קובץ, איתור, שידור ועצירה באמצע</strong> — 4→0→3→<strong style="color:#dc2626">5</strong></li><li><strong>טוקן חשבוניות ישראל — ביטול, שינוי מסגרת, הרשאות</strong> — 2→1→1→<strong style="color:#dc2626">4</strong></li><li><strong>ביזבוקס — ייבוא תנועות ועדכון דפי בנק</strong> — 1→0→1→<strong style="color:#dc2626">2</strong></li></ul>
+  </div>
+
+  <div class="sec-title">📊 כל הדפוסים — סיכום</div>
+  <div class="tbl-wrap">
+    <table class="tbl">
+      <thead><tr>
+        <th>דירוג</th><th>דפוס</th><th>סה"כ</th><th>%</th><th>מגמה</th><th>שבועות</th>
+      </tr></thead>
+      <tbody>
+      <tr onclick="openCluster('cC10')">
+        <td class="rank-cell">#1</td>
+        <td class="label-cell">מסמכים, פריטים ומלאי — פעולות ספציפיות ועסקאות מיוחדות</td>
+        <td class="count-cell">89</td>
+        <td class="pct-cell">28.3%</td>
+        <td class="trend-cell"><span class="trend trend-stable" style="font-size:11px;padding:2px 8px">◆ יציב</span></td>
+        <td class="spark-cell"><svg width="52" height="46" style="overflow:visible"><rect x="0" y="2" width="10" height="28" fill="#6baed6" rx="2"/><text x="5" y="44" text-anchor="middle" font-size="8" fill="#666">29</text><rect x="12" y="14" width="10" height="16" fill="#4292c6" rx="2"/><text x="17" y="44" text-anchor="middle" font-size="8" fill="#666">17</text><rect x="24" y="8" width="10" height="22" fill="#2171b5" rx="2"/><text x="29" y="44" text-anchor="middle" font-size="8" fill="#666">23</text><rect x="36" y="11" width="10" height="19" fill="#084594" rx="2"/><text x="41" y="44" text-anchor="middle" font-size="8" fill="#666">20</text></svg></td>
+      </tr>
+      <tr onclick="openCluster('cC11')">
+        <td class="rank-cell">#2</td>
+        <td class="label-cell">דוחות — הפקה, שאלות פרוצדוראליות ותקלות</td>
+        <td class="count-cell">38</td>
+        <td class="pct-cell">12.1%</td>
+        <td class="trend-cell"><span class="trend trend-stable" style="font-size:11px;padding:2px 8px">◆ יציב</span></td>
+        <td class="spark-cell"><svg width="52" height="46" style="overflow:visible"><rect x="0" y="15" width="10" height="15" fill="#6baed6" rx="2"/><text x="5" y="44" text-anchor="middle" font-size="8" fill="#666">8</text><rect x="12" y="23" width="10" height="7" fill="#4292c6" rx="2"/><text x="17" y="44" text-anchor="middle" font-size="8" fill="#666">4</text><rect x="24" y="2" width="10" height="28" fill="#2171b5" rx="2"/><text x="29" y="44" text-anchor="middle" font-size="8" fill="#666">15</text><rect x="36" y="9" width="10" height="21" fill="#084594" rx="2"/><text x="41" y="44" text-anchor="middle" font-size="8" fill="#666">11</text></svg></td>
+      </tr>
+      <tr onclick="openCluster('cC4')">
+        <td class="rank-cell">#3</td>
+        <td class="label-cell">ממשק מספר הקצאה — שגיאות 403/406/422 ואי-הופעה</td>
+        <td class="count-cell">32</td>
+        <td class="pct-cell">10.2%</td>
+        <td class="trend-cell"><span class="trend trend-stable" style="font-size:11px;padding:2px 8px">◆ יציב</span></td>
+        <td class="spark-cell"><svg width="52" height="46" style="overflow:visible"><rect x="0" y="2" width="10" height="28" fill="#6baed6" rx="2"/><text x="5" y="44" text-anchor="middle" font-size="8" fill="#666">10</text><rect x="12" y="13" width="10" height="17" fill="#4292c6" rx="2"/><text x="17" y="44" text-anchor="middle" font-size="8" fill="#666">6</text><rect x="24" y="10" width="10" height="20" fill="#2171b5" rx="2"/><text x="29" y="44" text-anchor="middle" font-size="8" fill="#666">7</text><rect x="36" y="5" width="10" height="25" fill="#084594" rx="2"/><text x="41" y="44" text-anchor="middle" font-size="8" fill="#666">9</text></svg></td>
+      </tr>
+      <tr onclick="openCluster('cC9')">
+        <td class="rank-cell">#4</td>
+        <td class="label-cell">שידור מע&quot;מ, מקדמות ו-PCN874 — שגיאות ופרוצדורות</td>
+        <td class="count-cell">29</td>
+        <td class="pct-cell">9.2%</td>
+        <td class="trend-cell"><span class="trend trend-stable" style="font-size:11px;padding:2px 8px">◆ יציב</span></td>
+        <td class="spark-cell"><svg width="52" height="46" style="overflow:visible"><rect x="0" y="18" width="10" height="12" fill="#6baed6" rx="2"/><text x="5" y="44" text-anchor="middle" font-size="8" fill="#666">4</text><rect x="12" y="5" width="10" height="25" fill="#4292c6" rx="2"/><text x="17" y="44" text-anchor="middle" font-size="8" fill="#666">8</text><rect x="24" y="5" width="10" height="25" fill="#2171b5" rx="2"/><text x="29" y="44" text-anchor="middle" font-size="8" fill="#666">8</text><rect x="36" y="2" width="10" height="28" fill="#084594" rx="2"/><text x="41" y="44" text-anchor="middle" font-size="8" fill="#666">9</text></svg></td>
+      </tr>
+      <tr onclick="openCluster('cC8')">
+        <td class="rank-cell">#5</td>
+        <td class="label-cell">הדפסות ושליחה — תקלות PDF, מדפסת ומייל</td>
+        <td class="count-cell">28</td>
+        <td class="pct-cell">8.9%</td>
+        <td class="trend-cell"><span class="trend trend-getting-worse" style="font-size:11px;padding:2px 8px">🔺 מחמיר</span></td>
+        <td class="spark-cell"><svg width="52" height="46" style="overflow:visible"><rect x="0" y="2" width="10" height="28" fill="#6baed6" rx="2"/><text x="5" y="44" text-anchor="middle" font-size="8" fill="#666">10</text><rect x="12" y="22" width="10" height="8" fill="#4292c6" rx="2"/><text x="17" y="44" text-anchor="middle" font-size="8" fill="#666">3</text><rect x="24" y="13" width="10" height="17" fill="#2171b5" rx="2"/><text x="29" y="44" text-anchor="middle" font-size="8" fill="#666">6</text><rect x="36" y="5" width="10" height="25" fill="#084594" rx="2"/><text x="41" y="44" text-anchor="middle" font-size="8" fill="#666">9</text></svg></td>
+      </tr>
+      <tr onclick="openCluster('cC3')">
+        <td class="rank-cell">#6</td>
+        <td class="label-cell">ייבוא ממקורות חיצוניים — hyp, ארדני, קראדקום, מודול ממשקים</td>
+        <td class="count-cell">21</td>
+        <td class="pct-cell">6.7%</td>
+        <td class="trend-cell"><span class="trend trend-getting-worse" style="font-size:11px;padding:2px 8px">🔺 מחמיר</span></td>
+        <td class="spark-cell"><svg width="52" height="46" style="overflow:visible"><rect x="0" y="24" width="10" height="6" fill="#6baed6" rx="2"/><text x="5" y="44" text-anchor="middle" font-size="8" fill="#666">3</text><rect x="12" y="28" width="10" height="2" fill="#4292c6" rx="2"/><text x="17" y="44" text-anchor="middle" font-size="8" fill="#666">1</text><rect x="24" y="21" width="10" height="9" fill="#2171b5" rx="2"/><text x="29" y="44" text-anchor="middle" font-size="8" fill="#666">4</text><rect x="36" y="2" width="10" height="28" fill="#084594" rx="2"/><text x="41" y="44" text-anchor="middle" font-size="8" fill="#666">13</text></svg></td>
+      </tr>
+      <tr onclick="openCluster('cC1')">
+        <td class="rank-cell">#7</td>
+        <td class="label-cell">קליטת דפי בנק — שגיאות פורמט, אי-רציפות, פרמטרים</td>
+        <td class="count-cell">18</td>
+        <td class="pct-cell">5.7%</td>
+        <td class="trend-cell"><span class="trend trend-getting-worse" style="font-size:11px;padding:2px 8px">🔺 מחמיר</span></td>
+        <td class="spark-cell"><svg width="52" height="46" style="overflow:visible"><rect x="0" y="24" width="10" height="6" fill="#6baed6" rx="2"/><text x="5" y="44" text-anchor="middle" font-size="8" fill="#666">3</text><rect x="12" y="28" width="10" height="2" fill="#4292c6" rx="2"/><text x="17" y="44" text-anchor="middle" font-size="8" fill="#666">0</text><rect x="24" y="28" width="10" height="2" fill="#2171b5" rx="2"/><text x="29" y="44" text-anchor="middle" font-size="8" fill="#666">1</text><rect x="36" y="2" width="10" height="28" fill="#084594" rx="2"/><text x="41" y="44" text-anchor="middle" font-size="8" fill="#666">14</text></svg></td>
+      </tr>
+      <tr onclick="openCluster('cC12')">
+        <td class="rank-cell">#8</td>
+        <td class="label-cell">BKMV, מבנה אחיד וגיבוי — ייצוא, שגיאות וקבצי Excel</td>
+        <td class="count-cell">18</td>
+        <td class="pct-cell">5.7%</td>
+        <td class="trend-cell"><span class="trend trend-stable" style="font-size:11px;padding:2px 8px">◆ יציב</span></td>
+        <td class="spark-cell"><svg width="52" height="46" style="overflow:visible"><rect x="0" y="2" width="10" height="28" fill="#6baed6" rx="2"/><text x="5" y="44" text-anchor="middle" font-size="8" fill="#666">6</text><rect x="12" y="21" width="10" height="9" fill="#4292c6" rx="2"/><text x="17" y="44" text-anchor="middle" font-size="8" fill="#666">2</text><rect x="24" y="7" width="10" height="23" fill="#2171b5" rx="2"/><text x="29" y="44" text-anchor="middle" font-size="8" fill="#666">5</text><rect x="36" y="7" width="10" height="23" fill="#084594" rx="2"/><text x="41" y="44" text-anchor="middle" font-size="8" fill="#666">5</text></svg></td>
+      </tr>
+      <tr onclick="openCluster('cC7')">
+        <td class="rank-cell">#9</td>
+        <td class="label-cell">שב&quot;א ואשראי — שידור, קליטה ותקלות בקופה</td>
+        <td class="count-cell">17</td>
+        <td class="pct-cell">5.4%</td>
+        <td class="trend-cell"><span class="trend trend-stable" style="font-size:11px;padding:2px 8px">◆ יציב</span></td>
+        <td class="spark-cell"><svg width="52" height="46" style="overflow:visible"><rect x="0" y="8" width="10" height="22" fill="#6baed6" rx="2"/><text x="5" y="44" text-anchor="middle" font-size="8" fill="#666">4</text><rect x="12" y="13" width="10" height="17" fill="#4292c6" rx="2"/><text x="17" y="44" text-anchor="middle" font-size="8" fill="#666">3</text><rect x="24" y="2" width="10" height="28" fill="#2171b5" rx="2"/><text x="29" y="44" text-anchor="middle" font-size="8" fill="#666">5</text><rect x="36" y="2" width="10" height="28" fill="#084594" rx="2"/><text x="41" y="44" text-anchor="middle" font-size="8" fill="#666">5</text></svg></td>
+      </tr>
+      <tr onclick="openCluster('cC6')">
+        <td class="rank-cell">#10</td>
+        <td class="label-cell">מסב — ייצור קובץ, איתור, שידור ועצירה באמצע</td>
+        <td class="count-cell">12</td>
+        <td class="pct-cell">3.8%</td>
+        <td class="trend-cell"><span class="trend trend-getting-worse" style="font-size:11px;padding:2px 8px">🔺 מחמיר</span></td>
+        <td class="spark-cell"><svg width="52" height="46" style="overflow:visible"><rect x="0" y="8" width="10" height="22" fill="#6baed6" rx="2"/><text x="5" y="44" text-anchor="middle" font-size="8" fill="#666">4</text><rect x="12" y="28" width="10" height="2" fill="#4292c6" rx="2"/><text x="17" y="44" text-anchor="middle" font-size="8" fill="#666">0</text><rect x="24" y="13" width="10" height="17" fill="#2171b5" rx="2"/><text x="29" y="44" text-anchor="middle" font-size="8" fill="#666">3</text><rect x="36" y="2" width="10" height="28" fill="#084594" rx="2"/><text x="41" y="44" text-anchor="middle" font-size="8" fill="#666">5</text></svg></td>
+      </tr>
+      <tr onclick="openCluster('cC5')">
+        <td class="rank-cell">#11</td>
+        <td class="label-cell">טוקן חשבוניות ישראל — ביטול, שינוי מסגרת, הרשאות</td>
+        <td class="count-cell">8</td>
+        <td class="pct-cell">2.5%</td>
+        <td class="trend-cell"><span class="trend trend-getting-worse" style="font-size:11px;padding:2px 8px">🔺 מחמיר</span></td>
+        <td class="spark-cell"><svg width="52" height="46" style="overflow:visible"><rect x="0" y="16" width="10" height="14" fill="#6baed6" rx="2"/><text x="5" y="44" text-anchor="middle" font-size="8" fill="#666">2</text><rect x="12" y="23" width="10" height="7" fill="#4292c6" rx="2"/><text x="17" y="44" text-anchor="middle" font-size="8" fill="#666">1</text><rect x="24" y="23" width="10" height="7" fill="#2171b5" rx="2"/><text x="29" y="44" text-anchor="middle" font-size="8" fill="#666">1</text><rect x="36" y="2" width="10" height="28" fill="#084594" rx="2"/><text x="41" y="44" text-anchor="middle" font-size="8" fill="#666">4</text></svg></td>
+      </tr>
+      <tr onclick="openCluster('cC2')">
+        <td class="rank-cell">#12</td>
+        <td class="label-cell">ביזבוקס — ייבוא תנועות ועדכון דפי בנק</td>
+        <td class="count-cell">4</td>
+        <td class="pct-cell">1.3%</td>
+        <td class="trend-cell"><span class="trend trend-getting-worse" style="font-size:11px;padding:2px 8px">🔺 מחמיר</span></td>
+        <td class="spark-cell"><svg width="52" height="46" style="overflow:visible"><rect x="0" y="16" width="10" height="14" fill="#6baed6" rx="2"/><text x="5" y="44" text-anchor="middle" font-size="8" fill="#666">1</text><rect x="12" y="28" width="10" height="2" fill="#4292c6" rx="2"/><text x="17" y="44" text-anchor="middle" font-size="8" fill="#666">0</text><rect x="24" y="16" width="10" height="14" fill="#2171b5" rx="2"/><text x="29" y="44" text-anchor="middle" font-size="8" fill="#666">1</text><rect x="36" y="2" width="10" height="28" fill="#084594" rx="2"/><text x="41" y="44" text-anchor="middle" font-size="8" fill="#666">2</text></svg></td>
+      </tr>
+      <tr class="other-row">
+        <td class="rank-cell">—</td>
+        <td class="label-cell">אחר — הנהלת חשבונות, כללי, טכני, קבלות תרומה ועוד</td>
+        <td class="count-cell">271</td>
+        <td class="pct-cell">—</td>
+        <td class="trend-cell">—</td>
+        <td class="spark-cell"><svg width="52" height="46" style="overflow:visible"><rect x="0" y="2" width="10" height="28" fill="#6baed6" rx="2"/><text x="5" y="44" text-anchor="middle" font-size="8" fill="#666">105</text><rect x="12" y="15" width="10" height="15" fill="#4292c6" rx="2"/><text x="17" y="44" text-anchor="middle" font-size="8" fill="#666">57</text><rect x="24" y="10" width="10" height="20" fill="#2171b5" rx="2"/><text x="29" y="44" text-anchor="middle" font-size="8" fill="#666">75</text><rect x="36" y="21" width="10" height="9" fill="#084594" rx="2"/><text x="41" y="44" text-anchor="middle" font-size="8" fill="#666">34</text></svg></td>
+      </tr></tbody>
+    </table>
+  </div>
+
+  <div class="toc-card">
+    <h3>🔗 ניווט מהיר</h3>
+    <div class="toc-grid"><a class="toc-link" onclick="openCluster('cC10')">#1 מסמכים, פריטים ומלאי — פעולות ספציפיות... (89)</a>
+<a class="toc-link" onclick="openCluster('cC11')">#2 דוחות — הפקה, שאלות פרוצדוראליות ותקלו... (38)</a>
+<a class="toc-link" onclick="openCluster('cC4')">#3 ממשק מספר הקצאה — שגיאות 403/406/422 ו... (32)</a>
+<a class="toc-link" onclick="openCluster('cC9')">#4 שידור מע&quot;מ, מקדמות ו-PCN874 — שגיאות ו... (29)</a>
+<a class="toc-link" onclick="openCluster('cC8')">#5 הדפסות ושליחה — תקלות PDF, מדפסת ומייל (28)</a>
+<a class="toc-link" onclick="openCluster('cC3')">#6 ייבוא ממקורות חיצוניים — hyp, ארדני, ק... (21)</a>
+<a class="toc-link" onclick="openCluster('cC1')">#7 קליטת דפי בנק — שגיאות פורמט, אי-רציפו... (18)</a>
+<a class="toc-link" onclick="openCluster('cC12')">#8 BKMV, מבנה אחיד וגיבוי — ייצוא, שגיאות... (18)</a>
+<a class="toc-link" onclick="openCluster('cC7')">#9 שב&quot;א ואשראי — שידור, קליטה ותקלות בקופ... (17)</a>
+<a class="toc-link" onclick="openCluster('cC6')">#10 מסב — ייצור קובץ, איתור, שידור ועצירה ... (12)</a>
+<a class="toc-link" onclick="openCluster('cC5')">#11 טוקן חשבוניות ישראל — ביטול, שינוי מסג... (8)</a>
+<a class="toc-link" onclick="openCluster('cC2')">#12 ביזבוקס — ייבוא תנועות ועדכון דפי בנק (4)</a>
+</div>
+  </div>
+
+  <div class="sec-title">📋 פירוט הדפוסים <span style="font-weight:400;font-size:14px">(לחץ כדי לפתוח)</span></div>
+  
+  <div class="cluster rank-1" id="cC10">
+    <div class="cluster-head">
+      <div class="title-block"><span class="rank-num">#1</span><h2>מסמכים, פריטים ומלאי — פעולות ספציפיות ועסקאות מיוחדות</h2></div>
+      <div class="right-block">
+        <div class="spark-wrap"><svg width="52" height="46" style="overflow:visible"><rect x="0" y="2" width="10" height="28" fill="#6baed6" rx="2"/><text x="5" y="44" text-anchor="middle" font-size="8" fill="#666">29</text><rect x="12" y="14" width="10" height="16" fill="#4292c6" rx="2"/><text x="17" y="44" text-anchor="middle" font-size="8" fill="#666">17</text><rect x="24" y="8" width="10" height="22" fill="#2171b5" rx="2"/><text x="29" y="44" text-anchor="middle" font-size="8" fill="#666">23</text><rect x="36" y="11" width="10" height="19" fill="#084594" rx="2"/><text x="41" y="44" text-anchor="middle" font-size="8" fill="#666">20</text></svg></div>
+        <div class="count-block"><div class="count">89</div><div class="pct">28.3%</div></div>
+      </div>
+    </div>
+    <div class="cluster-meta">
+      <span class="meta-tag weeks"><span class="meta-label">שבועות:</span> 4/4</span>
+      <span class="trend trend-stable">◆ יציב</span>
+      <span class="meta-tag topic"><span class="meta-label">נושא:</span> מסמכים, פריטים וניהול מלאי</span>
+      <div class="week-detail"><span class="wk-chip">12–14.4: 29</span> <span class="wk-chip">26–30.4: 17</span> <span class="wk-chip">3–7.5: 23</span> <span class="wk-chip">10–14.5: 20</span></div>
+    </div>
+    <div class="cluster-section">
+      <h4>דוגמאות (7 מתוך 89)</h4>
+      <div class="examples-list">
+        <div class="example">
+          <span class="ex-id">10302766</span>
+          <span class="ex-week">12–14.4.26</span>
+          <span class="ex-q">"יש לי חשבון מרכז שכולל כמה חשבונות עם ח.פ נפרד, אני רוצה לעשות גיול חובות ושהוא יסדר את זה לפי כל לקוח בנפרד. המשתמשת..."</span>
+        </div>
+        <div class="example">
+          <span class="ex-id">10302593</span>
+          <span class="ex-week">12–14.4.26</span>
+          <span class="ex-q">"במסמך של פחת רשמתי תאריך של היום במקום תאריך הרכישה. איך אפשר לתקן? ואם לא אז איך מבטלים ע&quot;מ לעשות חדש"</span>
+        </div>
+        <div class="example">
+          <span class="ex-id">10346316</span>
+          <span class="ex-week">26–30.4.26</span>
+          <span class="ex-q">"יש לי הודעה SEND TO MAIL FAIL איך מסדרים? זה קורה בעת הפקת חשבונית לדואל."</span>
+        </div>
+        <div class="example">
+          <span class="ex-id">10329886</span>
+          <span class="ex-week">26–30.4.26</span>
+          <span class="ex-q">"ברצוני ליצור אוטומציה של ביטול יתרת פתוחים להזמנות שנסגרו לתעודת משלוח וחשבונית. כיצד עושים זאת? המשתמש מציין שזו פני..."</span>
+        </div>
+        <div class="example">
+          <span class="ex-id">10348630</span>
+          <span class="ex-week">3–7.5.26</span>
+          <span class="ex-q">"כשמדפיסים חשבונית מס ריכוז הדף הראשון יוצא עם ברקוד ואילו המשך החשבונית - דף 2 יוצא בלי ברקוד וזה מקשה על הסריקה. הלק..."</span>
+        </div>
+        <div class="example">
+          <span class="ex-id">10349378</span>
+          <span class="ex-week">3–7.5.26</span>
+          <span class="ex-q">"התוכנה נסגרת בתפריט - הגדרות חברה, הגדרות מלאי... בוצע עדכון לתוכנה השבוע. אשמח לטיפול"</span>
+        </div>
+        <div class="example">
+          <span class="ex-id">10366521</span>
+          <span class="ex-week">10–14.5.26</span>
+          <span class="ex-q">"עסקת אקראי. המשתמש שאל לגבי עסקת אקראי והמערכת לא ידעה לספק תשובה."</span>
+        </div>
+      </div>
+    </div>
+    <div class="cluster-section">
+      <h4>תשובת בוט אופיינית</h4>
+      <div class="bot-answer">התשובה שהתקבלה היא שעל פי התיעוד הקיים, אין מידע המפרט כיצד ניתן להציג חלוקה של חובות עבור לקוחות משויכים בנפרד בתוך דוח המופק לחשבון מרכז, ולכן המערכת לא יודעת את התשובה לשאלה זו.</div>
+    </div>
+    <div class="cluster-section">
+      <h4>המלצת אימון</h4>
+      <div class="recommendation">להוסיף לבסיס הידע פרוצדורות ספציפיות לפעולות מסמכים: <strong>עסקת אקראי</strong> (רישום וסוג תנועה), שינוי <strong>סוג מסמך</strong> (קניות t→h), תיקון חשבונית לאחר הפקה, ורישום שדות חסרים לאחר הפקה. לכל פעולה — תהליך צעד-אחר-צעד עם צילומי מסך. לתעד גם את ממשק <strong>דוקה ↔ חשבשבת</strong>: מדוע לא נסנכרנים כרטיסי לקוחות ואיך לפתור.</div>
+    </div>
+  </div>
+  <div class="cluster rank-2" id="cC11">
+    <div class="cluster-head">
+      <div class="title-block"><span class="rank-num">#2</span><h2>דוחות — הפקה, שאלות פרוצדוראליות ותקלות</h2></div>
+      <div class="right-block">
+        <div class="spark-wrap"><svg width="52" height="46" style="overflow:visible"><rect x="0" y="15" width="10" height="15" fill="#6baed6" rx="2"/><text x="5" y="44" text-anchor="middle" font-size="8" fill="#666">8</text><rect x="12" y="23" width="10" height="7" fill="#4292c6" rx="2"/><text x="17" y="44" text-anchor="middle" font-size="8" fill="#666">4</text><rect x="24" y="2" width="10" height="28" fill="#2171b5" rx="2"/><text x="29" y="44" text-anchor="middle" font-size="8" fill="#666">15</text><rect x="36" y="9" width="10" height="21" fill="#084594" rx="2"/><text x="41" y="44" text-anchor="middle" font-size="8" fill="#666">11</text></svg></div>
+        <div class="count-block"><div class="count">38</div><div class="pct">12.1%</div></div>
+      </div>
+    </div>
+    <div class="cluster-meta">
+      <span class="meta-tag weeks"><span class="meta-label">שבועות:</span> 4/4</span>
+      <span class="trend trend-stable">◆ יציב</span>
+      <span class="meta-tag topic"><span class="meta-label">נושא:</span> דוחות</span>
+      <div class="week-detail"><span class="wk-chip">12–14.4: 8</span> <span class="wk-chip">26–30.4: 4</span> <span class="wk-chip">3–7.5: 15</span> <span class="wk-chip">10–14.5: 11</span></div>
+    </div>
+    <div class="cluster-section">
+      <h4>דוגמאות (7 מתוך 38)</h4>
+      <div class="examples-list">
+        <div class="example">
+          <span class="ex-id">10302226</span>
+          <span class="ex-week">12–14.4.26</span>
+          <span class="ex-q">"שלום רב, אני עובדת עם חברת סטורנקס EDI דרך חשבשבת וברצוני לדעם אם ישנה אפשרות להעברת הנתונים אוטומטית ולא כמו שאנחנו ..."</span>
+        </div>
+        <div class="example">
+          <span class="ex-id">10308109</span>
+          <span class="ex-week">12–14.4.26</span>
+          <span class="ex-q">"שלום רב יש לנו תקלה בפתיחת כרטסת על מסך המחשב. ברגע שמקלידים מס' כרטיס חשבון ממספר למספר רושם לנו תקלה Unrecognised d..."</span>
+        </div>
+        <div class="example">
+          <span class="ex-id">10344681</span>
+          <span class="ex-week">26–30.4.26</span>
+          <span class="ex-q">"אא ללחוץ במאזן על הכרטיסים. המשתמשת מדווחת על חוסר יכולת ללחוץ על כרטיסי החשבון מתוך דוח המאזן."</span>
+        </div>
+        <div class="example">
+          <span class="ex-id">10323649</span>
+          <span class="ex-week">26–30.4.26</span>
+          <span class="ex-q">"איך אני מעדכנת ספק שהוא לא משתתף בדוח נב&quot;ם?"</span>
+        </div>
+        <div class="example">
+          <span class="ex-id">10349553</span>
+          <span class="ex-week">3–7.5.26</span>
+          <span class="ex-q">"יש מאזן בוחן הפרש 20 ש&quot;ח אני רוצה לדבר עים נציג. הלקוחה מדווחת על הפרש של 20 ש&quot;ח במאזן הבוחן ומבקשת לדבר עם נציג."</span>
+        </div>
+        <div class="example">
+          <span class="ex-id">10351535</span>
+          <span class="ex-week">3–7.5.26</span>
+          <span class="ex-q">"למה לא ניתן לראות את נתוני הכרטיס ממאזן בוחן? המשתמש שואל גם לגבי האפשרות לבצע פתיחת כרטיס חשבון מתוך דוח מאזן בוחן."</span>
+        </div>
+        <div class="example">
+          <span class="ex-id">10365304</span>
+          <span class="ex-week">10–14.5.26</span>
+          <span class="ex-q">"נעלמו לי חשבוניות מדוח , אני לא מצליחה לראות. המשתמשת מדווחת שנעלמו לה חשבוניות מדוח והיא אינה מצליחה לאתר אותן."</span>
+        </div>
+      </div>
+    </div>
+    <div class="cluster-section">
+      <h4>תשובת בוט אופיינית</h4>
+      <div class="bot-answer">שלום, את שואלת האם קיימת אפשרות להעברת נתונים אוטומטית בממשק מול חברת סטורנקס (EDI), במקום התהליך הידני שאת מבצעת כיום דרך מחולל הדוחות ופעולת MOVE OUT. מכיוון שהמידע שברשותי אינו כולל הנחיות בנושא אוטומציה של ייצוא נתונים (MOVE OUT) או עבודה ספציפית מול מערכת EDI של סטורנקס, אלא רק הנחיות לייבוא נת</div>
+    </div>
+    <div class="cluster-section">
+      <h4>המלצת אימון</h4>
+      <div class="recommendation">לבנות מדריך <strong>דוחות נפוצים</strong>: גיול לקוחות, מאזן בוחן (כולל גרסה אנגלית), השוואת מחזורים בין שנים, כרטסות ומאזנים. לכל דוח — פרמטרים, מה עושים כשנתונים "נעלמים" וכיצד מסננים. לדוחות שנבנו על ידי נציג בעבר — להוסיף שאלת הבהרה ("איזה דוח?") לפני הפניה לנציג.</div>
+    </div>
+  </div>
+  <div class="cluster rank-3" id="cC4">
+    <div class="cluster-head">
+      <div class="title-block"><span class="rank-num">#3</span><h2>ממשק מספר הקצאה — שגיאות 403/406/422 ואי-הופעה</h2></div>
+      <div class="right-block">
+        <div class="spark-wrap"><svg width="52" height="46" style="overflow:visible"><rect x="0" y="2" width="10" height="28" fill="#6baed6" rx="2"/><text x="5" y="44" text-anchor="middle" font-size="8" fill="#666">10</text><rect x="12" y="13" width="10" height="17" fill="#4292c6" rx="2"/><text x="17" y="44" text-anchor="middle" font-size="8" fill="#666">6</text><rect x="24" y="10" width="10" height="20" fill="#2171b5" rx="2"/><text x="29" y="44" text-anchor="middle" font-size="8" fill="#666">7</text><rect x="36" y="5" width="10" height="25" fill="#084594" rx="2"/><text x="41" y="44" text-anchor="middle" font-size="8" fill="#666">9</text></svg></div>
+        <div class="count-block"><div class="count">32</div><div class="pct">10.2%</div></div>
+      </div>
+    </div>
+    <div class="cluster-meta">
+      <span class="meta-tag weeks"><span class="meta-label">שבועות:</span> 4/4</span>
+      <span class="trend trend-stable">◆ יציב</span>
+      <span class="meta-tag topic"><span class="meta-label">נושא:</span> מספר הקצאה, חשבוניות ישראל, טו</span>
+      <div class="week-detail"><span class="wk-chip">12–14.4: 10</span> <span class="wk-chip">26–30.4: 6</span> <span class="wk-chip">3–7.5: 7</span> <span class="wk-chip">10–14.5: 9</span></div>
+    </div>
+    <div class="cluster-section">
+      <h4>דוגמאות (7 מתוך 32)</h4>
+      <div class="examples-list">
+        <div class="example">
+          <span class="ex-id">10301322</span>
+          <span class="ex-week">12–14.4.26</span>
+          <span class="ex-q">"יש תקלה 406 וזה לא של רשות המיסים. אני מבקשת שתתקשרו אליי בבקשה להוציא חשבוניות, נהייה קשה דרככם."</span>
+        </div>
+        <div class="example">
+          <span class="ex-id">10303723</span>
+          <span class="ex-week">12–14.4.26</span>
+          <span class="ex-q">"מהי תקלה 401 בהקצאה. המשתמשת מבקשת לפתוח קריאה בנושא."</span>
+        </div>
+        <div class="example">
+          <span class="ex-id">10346808</span>
+          <span class="ex-week">26–30.4.26</span>
+          <span class="ex-q">"לא מקבל מספר הקצאה , מופיע לי קוד 403. המשתמש מדווח על שגיאת 403 בעת ניסיון לקבל מספר הקצאה."</span>
+        </div>
+        <div class="example">
+          <span class="ex-id">10345995</span>
+          <span class="ex-week">26–30.4.26</span>
+          <span class="ex-q">"י.א.יעקוביאן בע&quot;מ, לא נותן מס' הקצאה בחשבוניות. מציין שיש תקלה 430"</span>
+        </div>
+        <div class="example">
+          <span class="ex-id">10351797</span>
+          <span class="ex-week">3–7.5.26</span>
+          <span class="ex-q">"אנא צרו עימי קשר 0523122008 יש לי בעיה בהצקאה דחוף צריך להוציא חשבוניות. המשתמש מדווח על תקלה 406."</span>
+        </div>
+        <div class="example">
+          <span class="ex-id">10350891</span>
+          <span class="ex-week">3–7.5.26</span>
+          <span class="ex-q">"לא רושם מספר הקצאה, רושם תקלה 406"</span>
+        </div>
+        <div class="example">
+          <span class="ex-id">10364527</span>
+          <span class="ex-week">10–14.5.26</span>
+          <span class="ex-q">"לבדוק למה אין מספר הקצאה בהפקת חשבוניות באחד מהעמדות. ולמה כשה עמדה אחר סגורה - גם העמדה שניה אוטומטית נחסמת אפשרות כ..."</span>
+        </div>
+      </div>
+    </div>
+    <div class="cluster-section">
+      <h4>תשובת בוט אופיינית</h4>
+      <div class="bot-answer">את מציינת כי קיימת תקלה 406 וכי לדעתך היא אינה קשורה לרשות המסים. בדקתי בתיעוד הוראות השימוש בתוכנה שברשותי, ואיני יודע מהי תקלה 406 שכן היא אינה מופיעה במידע הקיים בתיעוד. כדי שניתן יהיה לפתוח קריאת שירות ולקבל מענה מנציג (באמצעות כפתור &quot;פתיחת קריאה&quot;), על השיחה לכלול שאלה ותשובה ברורה מתוך התיעוד ל</div>
+    </div>
+    <div class="cluster-section">
+      <h4>המלצת אימון</h4>
+      <div class="recommendation">לתעד את שלושת קודי השגיאה הנפוצים בממשק מספר הקצאה: <strong>403</strong> (בעיית אימות טוקן — לבדוק תוקף), <strong>406</strong> (חשבונית הופקה ללא הקצאה — שלב הגדרת רישיון), <strong>422</strong> (עוסק מורשה לא תקין — לבדוק ח"פ בממשק). לכל קוד — צעדי בדיקה ראשוניים. להוסיף הנחיות לבעיית <strong>הקצאה שלא מופיעה בעמדה ספציפית</strong> (רישיון לפי עמדה).</div>
+    </div>
+  </div>
+  <div class="cluster " id="cC9">
+    <div class="cluster-head">
+      <div class="title-block"><span class="rank-num">#4</span><h2>שידור מע&quot;מ, מקדמות ו-PCN874 — שגיאות ופרוצדורות</h2></div>
+      <div class="right-block">
+        <div class="spark-wrap"><svg width="52" height="46" style="overflow:visible"><rect x="0" y="18" width="10" height="12" fill="#6baed6" rx="2"/><text x="5" y="44" text-anchor="middle" font-size="8" fill="#666">4</text><rect x="12" y="5" width="10" height="25" fill="#4292c6" rx="2"/><text x="17" y="44" text-anchor="middle" font-size="8" fill="#666">8</text><rect x="24" y="5" width="10" height="25" fill="#2171b5" rx="2"/><text x="29" y="44" text-anchor="middle" font-size="8" fill="#666">8</text><rect x="36" y="2" width="10" height="28" fill="#084594" rx="2"/><text x="41" y="44" text-anchor="middle" font-size="8" fill="#666">9</text></svg></div>
+        <div class="count-block"><div class="count">29</div><div class="pct">9.2%</div></div>
+      </div>
+    </div>
+    <div class="cluster-meta">
+      <span class="meta-tag weeks"><span class="meta-label">שבועות:</span> 4/4</span>
+      <span class="trend trend-stable">◆ יציב</span>
+      <span class="meta-tag topic"><span class="meta-label">נושא:</span> מע&quot;מ וניכוי במקור</span>
+      <div class="week-detail"><span class="wk-chip">12–14.4: 4</span> <span class="wk-chip">26–30.4: 8</span> <span class="wk-chip">3–7.5: 8</span> <span class="wk-chip">10–14.5: 9</span></div>
+    </div>
+    <div class="cluster-section">
+      <h4>דוגמאות (7 מתוך 29)</h4>
+      <div class="examples-list">
+        <div class="example">
+          <span class="ex-id">10304199</span>
+          <span class="ex-week">12–14.4.26</span>
+          <span class="ex-q">"אני לא מצליחה לראות את הניכוי במקור במשתמש שלי. המשתמשת מתארת בעיה שבה היא אינה רואה את נתוני ניכוי המס במקור עבור המ..."</span>
+        </div>
+        <div class="example">
+          <span class="ex-id">10308199</span>
+          <span class="ex-week">12–14.4.26</span>
+          <span class="ex-q">"היי עשיתם משהו חדש ומאד נחמד התאמת מעמ אבל שיש לי זיכוי לא נותן לי להעביר. הלקוחה מדווחת על בעיה בהעברת תנועת זיכוי ב..."</span>
+        </div>
+        <div class="example">
+          <span class="ex-id">10345861</span>
+          <span class="ex-week">26–30.4.26</span>
+          <span class="ex-q">"אני מבצעת סגירת אוטומטית של מע&quot;מ כפי שלמדנו בזום הקודם ובדיווח הבא של המע&quot;מ אני מקבלת התראה &quot;דו&quot;ח תנועות מע&quot;מ ללא הכנ..."</span>
+        </div>
+        <div class="example">
+          <span class="ex-id">10328336</span>
+          <span class="ex-week">26–30.4.26</span>
+          <span class="ex-q">"שלום. בשידור מעמ 874 PCN יוצאת שגיאה &quot;תוכן הקובץ או רשומות פתוחות לא חוקיות (801) מה זה אומר? המשתמשת שואלת על משמעות..."</span>
+        </div>
+        <div class="example">
+          <span class="ex-id">10356830</span>
+          <span class="ex-week">3–7.5.26</span>
+          <span class="ex-q">"שידורים מהמספון לשרת תקין מהשרת לחשבשבת לא נקלט. הבעיה הכללית היא שהשידורים לא נקלטו למערכת."</span>
+        </div>
+        <div class="example">
+          <span class="ex-id">10349834</span>
+          <span class="ex-week">3–7.5.26</span>
+          <span class="ex-q">"אני מוציאה טופס 856 והוא יוצא ללא שם החברה, יוצא רק מספר תיק ניכויים. איפה צריך לעדכן את הפרטים של החברה כדי שהם יירש..."</span>
+        </div>
+        <div class="example">
+          <span class="ex-id">10365294</span>
+          <span class="ex-week">10–14.5.26</span>
+          <span class="ex-q">"יש לי חברה שמשום מה הדיווח מעמ מציג את זה כהפקץ דיווח מפורט ראשונה. הלקוח מדווח שדיווח המע&quot;מ מוצג כהפקה ראשונה למרות ..."</span>
+        </div>
+      </div>
+    </div>
+    <div class="cluster-section">
+      <h4>תשובת בוט אופיינית</h4>
+      <div class="bot-answer">את שואלת לגבי המקרה שבו אינך מצליחה לראות את הנתונים או להפיק ניכוי מס במקור במשתמש שלך. על פי התיעוד שברשותי, כאשר ישנה בעיה הקשורה לניכוי מס במקור, יש לבדוק מספר הגדרות במערכת: 1. **סוג תנועה:** יש לוודא שהתשלומים בוצעו עם סוג תנועה של ניכוי במקור. אם לא, יש לבטל בסטורנו ולרשום מחדש עם סוג התנועה</div>
+    </div>
+    <div class="cluster-section">
+      <h4>המלצת אימון</h4>
+      <div class="recommendation">לבנות פרק <strong>שידור מע"מ ומקדמות</strong>: הוראות שידור PCN874 שלב-אחר-שלב (כולל עסקת אקראי וסוג ניכוי דיבידנד), שידור מקדמות, פירוש שגיאת "נמצאו רשומות בהן הסיכום אינו תקין", וטיפול בדוח שנמחק. להוסיף: <strong>לקוח שאינו מחויב ב-874</strong> — איזה דוח מפיקים במקום.</div>
+    </div>
+  </div>
+  <div class="cluster " id="cC8">
+    <div class="cluster-head">
+      <div class="title-block"><span class="rank-num">#5</span><h2>הדפסות ושליחה — תקלות PDF, מדפסת ומייל</h2></div>
+      <div class="right-block">
+        <div class="spark-wrap"><svg width="52" height="46" style="overflow:visible"><rect x="0" y="2" width="10" height="28" fill="#6baed6" rx="2"/><text x="5" y="44" text-anchor="middle" font-size="8" fill="#666">10</text><rect x="12" y="22" width="10" height="8" fill="#4292c6" rx="2"/><text x="17" y="44" text-anchor="middle" font-size="8" fill="#666">3</text><rect x="24" y="13" width="10" height="17" fill="#2171b5" rx="2"/><text x="29" y="44" text-anchor="middle" font-size="8" fill="#666">6</text><rect x="36" y="5" width="10" height="25" fill="#084594" rx="2"/><text x="41" y="44" text-anchor="middle" font-size="8" fill="#666">9</text></svg></div>
+        <div class="count-block"><div class="count">28</div><div class="pct">8.9%</div></div>
+      </div>
+    </div>
+    <div class="cluster-meta">
+      <span class="meta-tag weeks"><span class="meta-label">שבועות:</span> 4/4</span>
+      <span class="trend trend-getting-worse">🔺 מחמיר</span>
+      <span class="meta-tag topic"><span class="meta-label">נושא:</span> שליחה למייל, חתימה דיגיטלית, ה</span>
+      <div class="week-detail"><span class="wk-chip">12–14.4: 10</span> <span class="wk-chip">26–30.4: 3</span> <span class="wk-chip">3–7.5: 6</span> <span class="wk-chip">10–14.5: 9</span></div>
+    </div>
+    <div class="cluster-section">
+      <h4>דוגמאות (7 מתוך 28)</h4>
+      <div class="examples-list">
+        <div class="example">
+          <span class="ex-id">10309194</span>
+          <span class="ex-week">12–14.4.26</span>
+          <span class="ex-q">"יש תקלה בהדפסת דוח פנקס תשלומים מעמ שגיאה קוד 2146959355. המשתמשת מציינת שיש לה בעיה כללית בהדפסות וספציפית בהדפסת דו..."</span>
+        </div>
+        <div class="example">
+          <span class="ex-id">10309191</span>
+          <span class="ex-week">12–14.4.26</span>
+          <span class="ex-q">"יש תקלה בהדפסת דוח פנקס תשלומים מעמ שגיאה קוד 2146959355"</span>
+        </div>
+        <div class="example">
+          <span class="ex-id">10328638</span>
+          <span class="ex-week">26–30.4.26</span>
+          <span class="ex-q">"אם אני רוצה לשלוח חשבונית ל2 כתובות מייל איך עושים זאת ,משהו קבוע ולא חד פעמי"</span>
+        </div>
+        <div class="example">
+          <span class="ex-id">10324630</span>
+          <span class="ex-week">26–30.4.26</span>
+          <span class="ex-q">"המסמכים יוצאים חתוכים בדפנות ויוצא כל הזמן פעמיים. בעיות בהדפסת מסמכים."</span>
+        </div>
+        <div class="example">
+          <span class="ex-id">10352034</span>
+          <span class="ex-week">3–7.5.26</span>
+          <span class="ex-q">"כאשר אני רוצה לצפות בכל התנועות של ספק מסויים (הנהלת חשבונות &gt; חשבונות &gt; חיפוש ספק &gt; לחיצה ימנית &gt; כל התנועות) מופיעה..."</span>
+        </div>
+        <div class="example">
+          <span class="ex-id">10351633</span>
+          <span class="ex-week">3–7.5.26</span>
+          <span class="ex-q">"ביצענו עדכון תוכנה ויש בעיה בהדפסה. אבקש לפתוח קריאה"</span>
+        </div>
+        <div class="example">
+          <span class="ex-id">10366476</span>
+          <span class="ex-week">10–14.5.26</span>
+          <span class="ex-q">"אני צריכה לחבר את החשבשבת למייל. המשתמש מנסה לשלוח הצעת מחיר ומקבל הודעה שהמייל לא מחובר, ובנוסף מדווח שחסרה לו לשוני..."</span>
+        </div>
+      </div>
+    </div>
+    <div class="cluster-section">
+      <h4>תשובת בוט אופיינית</h4>
+      <div class="bot-answer">שלום, אני מבין שאתה שואל לגבי תקלה המתרחשת בעת הדפסת דוח פנקס תשלומים למע&quot;מ עם קוד שגיאה 2146959355. לצערי, איני יודע מהו הפתרון לשגיאה זו, שכן המידע בתיעוד שברשותי אינו כולל התייחסות לקוד השגיאה הספציפי שציינת. ככלל, עבור תקלות טכנית שאינן מפורטות במדריכי השימוש, מומלץ לפנות לתמיכה הטכנית.</div>
+    </div>
+    <div class="cluster-section">
+      <h4>המלצת אימון</h4>
+      <div class="recommendation">לכתוב תזרים תשובה לתקלות הדפסה: <strong>הפקה ארוכה / תקלה בהדפסה</strong> (צעדי ניפוי שגיאות), <strong>מנה בחלוקה לרבעים</strong> (הגדרות מדפסת), <strong>PDF לא נפתח</strong> (הגדרות PDF). להוסיף הנחיות לחיבור <strong>מייל לחשבשבת</strong> (SMTP/Outlook) ומדוע שליחה דיגיטלית נכשלת לאחר שדרוג אאוטלוק.</div>
+    </div>
+  </div>
+  <div class="cluster " id="cC3">
+    <div class="cluster-head">
+      <div class="title-block"><span class="rank-num">#6</span><h2>ייבוא ממקורות חיצוניים — hyp, ארדני, קראדקום, מודול ממשקים</h2></div>
+      <div class="right-block">
+        <div class="spark-wrap"><svg width="52" height="46" style="overflow:visible"><rect x="0" y="24" width="10" height="6" fill="#6baed6" rx="2"/><text x="5" y="44" text-anchor="middle" font-size="8" fill="#666">3</text><rect x="12" y="28" width="10" height="2" fill="#4292c6" rx="2"/><text x="17" y="44" text-anchor="middle" font-size="8" fill="#666">1</text><rect x="24" y="21" width="10" height="9" fill="#2171b5" rx="2"/><text x="29" y="44" text-anchor="middle" font-size="8" fill="#666">4</text><rect x="36" y="2" width="10" height="28" fill="#084594" rx="2"/><text x="41" y="44" text-anchor="middle" font-size="8" fill="#666">13</text></svg></div>
+        <div class="count-block"><div class="count">21</div><div class="pct">6.7%</div></div>
+      </div>
+    </div>
+    <div class="cluster-meta">
+      <span class="meta-tag weeks"><span class="meta-label">שבועות:</span> 4/4</span>
+      <span class="trend trend-getting-worse">🔺 מחמיר</span>
+      <span class="meta-tag topic"><span class="meta-label">נושא:</span> גיבויים וממשקים</span>
+      <div class="week-detail"><span class="wk-chip">12–14.4: 3</span> <span class="wk-chip">26–30.4: 1</span> <span class="wk-chip">3–7.5: 4</span> <span class="wk-chip">10–14.5: 13</span></div>
+    </div>
+    <div class="cluster-section">
+      <h4>דוגמאות (7 מתוך 21)</h4>
+      <div class="examples-list">
+        <div class="example">
+          <span class="ex-id">10303674</span>
+          <span class="ex-week">12–14.4.26</span>
+          <span class="ex-q">"תקלה בהעברת קובץ ממשק מתוכנת 'נשר'"</span>
+        </div>
+        <div class="example">
+          <span class="ex-id">10308815</span>
+          <span class="ex-week">12–14.4.26</span>
+          <span class="ex-q">"כשרוצים ליבא תנועות הנה&quot;ח רושם &quot;המנוי אינו במנוי במודול ממשקים&quot;, ניסיתי לצאת מחשבשבת ולהכנס שוב ועדיין לא מאפשר. נמצא..."</span>
+        </div>
+        <div class="example">
+          <span class="ex-id">10323439</span>
+          <span class="ex-week">26–30.4.26</span>
+          <span class="ex-q">"העברת מנות מתוכנת VISION. המשתמש מבקש לדעת כיצד לבצע העברת מנות מתוכנת VISION לתוכנה."</span>
+        </div>
+        <div class="example">
+          <span class="ex-id">10349827</span>
+          <span class="ex-week">3–7.5.26</span>
+          <span class="ex-q">"ניסיתי לקלט קובץ מלקוח וקיבלתי הודעה שאין לנו ממשקים..."</span>
+        </div>
+        <div class="example">
+          <span class="ex-id">10350169</span>
+          <span class="ex-week">3–7.5.26</span>
+          <span class="ex-q">"היי יש לי תקלה שזה לא נותן לי לעשות יבוא תנועות. כבר בשלב 2 זה רושם לי שהמנוי אינו בשימוש למודל ממשקים."</span>
+        </div>
+        <div class="example">
+          <span class="ex-id">10366055</span>
+          <span class="ex-week">10–14.5.26</span>
+          <span class="ex-q">"היי, אני מנסה ליצור קובץ ביבוא חשבונות ומקבל הודעה שהטבלה ריקה"</span>
+        </div>
+        <div class="example">
+          <span class="ex-id">10365873</span>
+          <span class="ex-week">10–14.5.26</span>
+          <span class="ex-q">"היי צריכה עזרה למחוק קובץ מובינג שקלטנו"</span>
+        </div>
+      </div>
+    </div>
+    <div class="cluster-section">
+      <h4>תשובת בוט אופיינית</h4>
+      <div class="bot-answer">אתה שואל לגבי תקלה בהעברת קובץ ממשק מתוכנת 'נשר'. המידע המופיע בתיעוד שברשותי אינו כולל פרטים על תוכנה זו או על אופן הטיפול בתקלות הקשורות אליה ספציפית, ולכן איני יודע את התשובה. באופן כללי, תוכנת חשבשבת מאפשרת להיעזר ב-&quot;אשף ממשקי יבוא&quot; (דרך תפריט התחל &gt; חשבשבת &gt; אשף ממשקי יבוא). אשף זה מיועד לפתרון</div>
+    </div>
+    <div class="cluster-section">
+      <h4>המלצת אימון</h4>
+      <div class="recommendation">⚠️ דפוס מחמיר בחדות. לכתוב מדריך <strong>ייבוא ממקורות חיצוניים</strong>: ביזבוקס (עדכון תנועות, ייבוא דפי בנק), קובץ hyp, העברה מארדני/קראדקום, מובין, ופריטים ממחיר רב-עמודות. לכל מקור — פורמט הקובץ הנדרש ותהליך הקליטה. להוסיף פרק על <strong>מנוי מודול ממשקים</strong>: מה הודעת "המנוי אינו בשרות" אומרת ומה עושים.</div>
+    </div>
+  </div>
+  <div class="cluster " id="cC1">
+    <div class="cluster-head">
+      <div class="title-block"><span class="rank-num">#7</span><h2>קליטת דפי בנק — שגיאות פורמט, אי-רציפות, פרמטרים</h2></div>
+      <div class="right-block">
+        <div class="spark-wrap"><svg width="52" height="46" style="overflow:visible"><rect x="0" y="24" width="10" height="6" fill="#6baed6" rx="2"/><text x="5" y="44" text-anchor="middle" font-size="8" fill="#666">3</text><rect x="12" y="28" width="10" height="2" fill="#4292c6" rx="2"/><text x="17" y="44" text-anchor="middle" font-size="8" fill="#666">0</text><rect x="24" y="28" width="10" height="2" fill="#2171b5" rx="2"/><text x="29" y="44" text-anchor="middle" font-size="8" fill="#666">1</text><rect x="36" y="2" width="10" height="28" fill="#084594" rx="2"/><text x="41" y="44" text-anchor="middle" font-size="8" fill="#666">14</text></svg></div>
+        <div class="count-block"><div class="count">18</div><div class="pct">5.7%</div></div>
+      </div>
+    </div>
+    <div class="cluster-meta">
+      <span class="meta-tag weeks"><span class="meta-label">שבועות:</span> 3/4</span>
+      <span class="trend trend-getting-worse">🔺 מחמיר</span>
+      <span class="meta-tag topic"><span class="meta-label">נושא:</span> גיבויים וממשקים</span>
+      <div class="week-detail"><span class="wk-chip">12–14.4: 3</span> <span class="wk-chip">26–30.4: 0</span> <span class="wk-chip">3–7.5: 1</span> <span class="wk-chip">10–14.5: 14</span></div>
+    </div>
+    <div class="cluster-section">
+      <h4>דוגמאות (5 מתוך 18)</h4>
+      <div class="examples-list">
+        <div class="example">
+          <span class="ex-id">10309851</span>
+          <span class="ex-week">12–14.4.26</span>
+          <span class="ex-q">"בקליטת דפי בנק של אוצר החייל הקובץ נקלט בכתב הפוך"</span>
+        </div>
+        <div class="example">
+          <span class="ex-id">10302577</span>
+          <span class="ex-week">12–14.4.26</span>
+          <span class="ex-q">"עודפים יתרת פתיחה בקובץ האחיד ובמאזן שאני מפיקה אינם זהים, מה יכולה להיות הסיבה? המשתמש מציין שיש לו הפרש בין יתרת הפ..."</span>
+        </div>
+        <div class="example">
+          <span class="ex-id">10348611</span>
+          <span class="ex-week">3–7.5.26</span>
+          <span class="ex-q">"בניסיון לבצע התאמות בנק ידניות מקבלת חלון שבו כתוב: לא ניתן לבצע קליטה עקב תקלה בקובץ הפרמטרים. מה עושים?"</span>
+        </div>
+        <div class="example">
+          <span class="ex-id">10364109</span>
+          <span class="ex-week">10–14.5.26</span>
+          <span class="ex-q">"בנושא התאמת בנקים -יש לנו כרטיס נוסף שרוצים לבצע עליו התאמת בנק.שמרנו קבצים של דפי הבנק אבל אין אפשרות לקלוט את דפי ה..."</span>
+        </div>
+        <div class="example">
+          <span class="ex-id">10363471</span>
+          <span class="ex-week">10–14.5.26</span>
+          <span class="ex-q">"כיצד מקבלים קובץ עם סיומת PRM לצורך קליטת דפי בנק לאומי"</span>
+        </div>
+      </div>
+    </div>
+    <div class="cluster-section">
+      <h4>תשובת בוט אופיינית</h4>
+      <div class="bot-answer">אתה שואל לגבי מצב שבו בעת קליטת דפי בנק של בנק אוצר החייל, הקובץ מופיע בכתב הפוך. לצערי, המידע לגבי פתרון תקלה זו אינו מופיע בהוראות השימוש ובתיעוד שברשותי, ולכן איני יודע את התשובה לשאלתך. אשמח לעזור אם תרצה לשאול שאלה אחרת לגבי אופן השימוש בתוכנה או אם לא קיבלת תשובה מספקת בנושא אחר.</div>
+    </div>
+    <div class="cluster-section">
+      <h4>המלצת אימון</h4>
+      <div class="recommendation">⚠️ עלייה חדה בשבוע הנוכחי. לתעד פורמטי דפי בנק לפי בנק: <strong>לאומי (PRM)</strong>, <strong>יובנק (U-Bank)</strong>, <strong>דיסקונט</strong> (שדה הפרטים), <strong>הפועלים</strong>, <strong>אוצר החייל</strong> (כתב הפוך). לכל בנק — פורמט ההורדה הנכון ושגיאות אופייניות. לתעד: "אינו רציף", "יתרת סגירה אינה תואמת", "תקלה בקובץ פרמטרים".</div>
+    </div>
+  </div>
+  <div class="cluster " id="cC12">
+    <div class="cluster-head">
+      <div class="title-block"><span class="rank-num">#8</span><h2>BKMV, מבנה אחיד וגיבוי — ייצוא, שגיאות וקבצי Excel</h2></div>
+      <div class="right-block">
+        <div class="spark-wrap"><svg width="52" height="46" style="overflow:visible"><rect x="0" y="2" width="10" height="28" fill="#6baed6" rx="2"/><text x="5" y="44" text-anchor="middle" font-size="8" fill="#666">6</text><rect x="12" y="21" width="10" height="9" fill="#4292c6" rx="2"/><text x="17" y="44" text-anchor="middle" font-size="8" fill="#666">2</text><rect x="24" y="7" width="10" height="23" fill="#2171b5" rx="2"/><text x="29" y="44" text-anchor="middle" font-size="8" fill="#666">5</text><rect x="36" y="7" width="10" height="23" fill="#084594" rx="2"/><text x="41" y="44" text-anchor="middle" font-size="8" fill="#666">5</text></svg></div>
+        <div class="count-block"><div class="count">18</div><div class="pct">5.7%</div></div>
+      </div>
+    </div>
+    <div class="cluster-meta">
+      <span class="meta-tag weeks"><span class="meta-label">שבועות:</span> 4/4</span>
+      <span class="trend trend-stable">◆ יציב</span>
+      <span class="meta-tag topic"><span class="meta-label">נושא:</span> גיבויים וממשקים</span>
+      <div class="week-detail"><span class="wk-chip">12–14.4: 6</span> <span class="wk-chip">26–30.4: 2</span> <span class="wk-chip">3–7.5: 5</span> <span class="wk-chip">10–14.5: 5</span></div>
+    </div>
+    <div class="cluster-section">
+      <h4>דוגמאות (7 מתוך 18)</h4>
+      <div class="examples-list">
+        <div class="example">
+          <span class="ex-id">10302527</span>
+          <span class="ex-week">12–14.4.26</span>
+          <span class="ex-q">"הקמת חברות חדשות בספריית החברות מגיבוי של טרה סייף"</span>
+        </div>
+        <div class="example">
+          <span class="ex-id">10305226</span>
+          <span class="ex-week">12–14.4.26</span>
+          <span class="ex-q">"לא מצליח לעשות גיבוי כותב קוד שגיאה 05"</span>
+        </div>
+        <div class="example">
+          <span class="ex-id">10345937</span>
+          <span class="ex-week">26–30.4.26</span>
+          <span class="ex-q">"אנחנו מנסים ליצא קובץ מבנה אחיד, אך בעת הזנת הנתונים במס' המנוי שלנו 153709, הוא רושם שהמנוי בחלונות שגוי. בשורה התחת..."</span>
+        </div>
+        <div class="example">
+          <span class="ex-id">10330291</span>
+          <span class="ex-week">26–30.4.26</span>
+          <span class="ex-q">"רוצה ליצא קובץ מבנה אחיד. הוא רושם לי שמספר מנוי חלונות לא תקין"</span>
+        </div>
+        <div class="example">
+          <span class="ex-id">10348809</span>
+          <span class="ex-week">3–7.5.26</span>
+          <span class="ex-q">"העלאת גיבוי מריווחית לשקלולית"</span>
+        </div>
+        <div class="example">
+          <span class="ex-id">10350186</span>
+          <span class="ex-week">3–7.5.26</span>
+          <span class="ex-q">"צריך לעשות עדכון גרסה לחשבשבת כי אין לנו אופציה לעשות קובץ במבנה אחיד"</span>
+        </div>
+        <div class="example">
+          <span class="ex-id">10363864</span>
+          <span class="ex-week">10–14.5.26</span>
+          <span class="ex-q">"אני צריך עזרה בהפקת BKMV בצורה אוטומטית. אני מעוניין להפיק קובץ BKMV אבל לא דרך ממשק גרפי כמו שאתם מציעים בכללי &gt; תכו..."</span>
+        </div>
+      </div>
+    </div>
+    <div class="cluster-section">
+      <h4>תשובת בוט אופיינית</h4>
+      <div class="bot-answer">אתה שואל לגבי הקמת חברה חדשה בספריית החברות באמצעות גיבוי של טרה סייף. מאחר שהמידע לגבי התנהלות מול גיבוי של &quot;טרה סייף&quot; אינו מופיע במסמכי התיעוד, איני יודע כיצד לבצע את הפעולה ספציפית משירות זה. באופן כללי, על פי הוראות השימוש בתוכנה, במידה ורוצים להקים חברה חדשה המבוססת על נתונים קיימים (כולל תנועו</div>
+    </div>
+    <div class="cluster-section">
+      <h4>המלצת אימון</h4>
+      <div class="recommendation">לתעד הפקת קובץ <strong>BKMV</strong>: הבדל בין הפקה ידנית לאוטומטית, "רשומות לא תקינות", גודל קובץ גדול. להוסיף הנחיות <strong>גיבוי נכשל</strong> — בדיקות ראשוניות. לתעד <strong>דוח אקסל מקורות ושימושים</strong> וייצוא נתונים לאקסל.</div>
+    </div>
+  </div>
+  <div class="cluster " id="cC7">
+    <div class="cluster-head">
+      <div class="title-block"><span class="rank-num">#9</span><h2>שב&quot;א ואשראי — שידור, קליטה ותקלות בקופה</h2></div>
+      <div class="right-block">
+        <div class="spark-wrap"><svg width="52" height="46" style="overflow:visible"><rect x="0" y="8" width="10" height="22" fill="#6baed6" rx="2"/><text x="5" y="44" text-anchor="middle" font-size="8" fill="#666">4</text><rect x="12" y="13" width="10" height="17" fill="#4292c6" rx="2"/><text x="17" y="44" text-anchor="middle" font-size="8" fill="#666">3</text><rect x="24" y="2" width="10" height="28" fill="#2171b5" rx="2"/><text x="29" y="44" text-anchor="middle" font-size="8" fill="#666">5</text><rect x="36" y="2" width="10" height="28" fill="#084594" rx="2"/><text x="41" y="44" text-anchor="middle" font-size="8" fill="#666">5</text></svg></div>
+        <div class="count-block"><div class="count">17</div><div class="pct">5.4%</div></div>
+      </div>
+    </div>
+    <div class="cluster-meta">
+      <span class="meta-tag weeks"><span class="meta-label">שבועות:</span> 4/4</span>
+      <span class="trend trend-stable">◆ יציב</span>
+      <span class="meta-tag topic"><span class="meta-label">נושא:</span> שב&quot;א ואשראי</span>
+      <div class="week-detail"><span class="wk-chip">12–14.4: 4</span> <span class="wk-chip">26–30.4: 3</span> <span class="wk-chip">3–7.5: 5</span> <span class="wk-chip">10–14.5: 5</span></div>
+    </div>
+    <div class="cluster-section">
+      <h4>דוגמאות (7 מתוך 17)</h4>
+      <div class="examples-list">
+        <div class="example">
+          <span class="ex-id">10303583</span>
+          <span class="ex-week">12–14.4.26</span>
+          <span class="ex-q">"בעקבות החלפת מחשב אני צריכה להסיר את התוכנה מהמחשב ולהתקין אותה על המחשב החדש. אנא הדריכו אותי כיצד להמשיך."</span>
+        </div>
+        <div class="example">
+          <span class="ex-id">10307656</span>
+          <span class="ex-week">12–14.4.26</span>
+          <span class="ex-q">"החשבשבת נתקעת, והמסופון לא עובד"</span>
+        </div>
+        <div class="example">
+          <span class="ex-id">10346914</span>
+          <span class="ex-week">26–30.4.26</span>
+          <span class="ex-q">"איך מעדכנים כרטיס אשראי לתשלום המנוי בחשבשבת? המשתמשת מבקשת לעדכן את פרטי כרטיס האשראי עבור תשלום המנוי."</span>
+        </div>
+        <div class="example">
+          <span class="ex-id">10325172</span>
+          <span class="ex-week">26–30.4.26</span>
+          <span class="ex-q">"העברת עמדת חשבשבת ממחשב למחשב אחר. המשתמש צריך להעביר עמדה קיימת לעמדה אחרת."</span>
+        </div>
+        <div class="example">
+          <span class="ex-id">10352658</span>
+          <span class="ex-week">3–7.5.26</span>
+          <span class="ex-q">"תקלה משביתה לאחר עדכון תוכנה. הודעת תקלה בעדכון &quot;הקובץ פגום ויש להוריד אותו בשנית&quot;. בוצעה הפעלה מחדש של המחשב אך הבעי..."</span>
+        </div>
+        <div class="example">
+          <span class="ex-id">10350618</span>
+          <span class="ex-week">3–7.5.26</span>
+          <span class="ex-q">"איך מגדירים שבאופן קבוע כל פעם שפותחים מקט חדש הוא יהיה מסוג פריט איתור. המשתמשת רוצה לדעת איך להגדיר שכל מק&quot;ט חדש שנ..."</span>
+        </div>
+        <div class="example">
+          <span class="ex-id">10363231</span>
+          <span class="ex-week">10–14.5.26</span>
+          <span class="ex-q">"יש לי תקלה בהדפסה לשידור באשראי, יוצאת הדפסה פונטים קטנים במקום על כל המסך."</span>
+        </div>
+      </div>
+    </div>
+    <div class="cluster-section">
+      <h4>תשובת בוט אופיינית</h4>
+      <div class="bot-answer">שלום, את מבקשת לקבל הדרכה כיצד להסיר את התוכנה מהמחשב ולהתקין אותה במחשב חדש בעקבות החלפת מחשב. לצערי, המידע לגבי אופן התקנת התוכנה מחדש או הסרתה אינו מופיע במסמכים שברשותי, ולכן איני יודע את התשובה לכך. מאחר שסיפקת את כל הפרטים הנדרשים (שם ומספר טלפון תקין), הדרך לקבל שירות מנציג או לפתוח קריאה בנו</div>
+    </div>
+    <div class="cluster-section">
+      <h4>המלצת אימון</h4>
+      <div class="recommendation">לכתוב מדריך <strong>שב"א ואשראי</strong>: מה גורם לשידור להיות מבוטל, ייצוא קובץ כרטיסי אשראי מבנק לאומי וקליטתו בחשבשבת, טיפול בקופה לא פעילה. לתעד <strong>הדפסת שידור אשראי</strong> (בעיית פונטים קטנים — הגדרת מדפסת).</div>
+    </div>
+  </div>
+  <div class="cluster " id="cC6">
+    <div class="cluster-head">
+      <div class="title-block"><span class="rank-num">#10</span><h2>מסב — ייצור קובץ, איתור, שידור ועצירה באמצע</h2></div>
+      <div class="right-block">
+        <div class="spark-wrap"><svg width="52" height="46" style="overflow:visible"><rect x="0" y="8" width="10" height="22" fill="#6baed6" rx="2"/><text x="5" y="44" text-anchor="middle" font-size="8" fill="#666">4</text><rect x="12" y="28" width="10" height="2" fill="#4292c6" rx="2"/><text x="17" y="44" text-anchor="middle" font-size="8" fill="#666">0</text><rect x="24" y="13" width="10" height="17" fill="#2171b5" rx="2"/><text x="29" y="44" text-anchor="middle" font-size="8" fill="#666">3</text><rect x="36" y="2" width="10" height="28" fill="#084594" rx="2"/><text x="41" y="44" text-anchor="middle" font-size="8" fill="#666">5</text></svg></div>
+        <div class="count-block"><div class="count">12</div><div class="pct">3.8%</div></div>
+      </div>
+    </div>
+    <div class="cluster-meta">
+      <span class="meta-tag weeks"><span class="meta-label">שבועות:</span> 3/4</span>
+      <span class="trend trend-getting-worse">🔺 מחמיר</span>
+      <span class="meta-tag topic"><span class="meta-label">נושא:</span> שב&quot;א ואשראי</span>
+      <div class="week-detail"><span class="wk-chip">12–14.4: 4</span> <span class="wk-chip">26–30.4: 0</span> <span class="wk-chip">3–7.5: 3</span> <span class="wk-chip">10–14.5: 5</span></div>
+    </div>
+    <div class="cluster-section">
+      <h4>דוגמאות (6 מתוך 12)</h4>
+      <div class="examples-list">
+        <div class="example">
+          <span class="ex-id">10302379</span>
+          <span class="ex-week">12–14.4.26</span>
+          <span class="ex-q">"מסב תקוע"</span>
+        </div>
+        <div class="example">
+          <span class="ex-id">10302103</span>
+          <span class="ex-week">12–14.4.26</span>
+          <span class="ex-q">"מסב תקוע. המשתמשת מדווחת שהמס&quot;ב תקוע בתוכנה ומבקשת לפתוח קריאת שירות."</span>
+        </div>
+        <div class="example">
+          <span class="ex-id">10350779</span>
+          <span class="ex-week">3–7.5.26</span>
+          <span class="ex-q">"עידכנתי פרטי בנק לספק לאחר שהפקתי את הקובץ, האם כשאני אעשה שחזור הוא יעדכן זאת בקובץ? המשתמש שואל האם עדכון פרטי בנק ..."</span>
+        </div>
+        <div class="example">
+          <span class="ex-id">10350898</span>
+          <span class="ex-week">3–7.5.26</span>
+          <span class="ex-q">"אני לא מצליחה לשנות את המוסד שולח. נכנסתי להנהלת חשבונות &gt; תשלומים &gt; העברה למס&quot;ב ולא מופיע שם הגדרת קוד מוסד."</span>
+        </div>
+        <div class="example">
+          <span class="ex-id">10366384</span>
+          <span class="ex-week">10–14.5.26</span>
+          <span class="ex-q">"ביצעתי מסב לעובד ולא נוצרה לי בכרטסת שורת פקודת יומן. אני צריכה שתחזרו אלי."</span>
+        </div>
+        <div class="example">
+          <span class="ex-id">10365607</span>
+          <span class="ex-week">10–14.5.26</span>
+          <span class="ex-q">"לא מצליח לאתר את הקובץ מסב ממנה. המשתמש לא מצליח לאתר את קובץ המס&quot;ב שהופק מהמנה."</span>
+        </div>
+      </div>
+    </div>
+    <div class="cluster-section">
+      <h4>תשובת בוט אופיינית</h4>
+      <div class="bot-answer">אתה מציין כי המסב תקוע. כיוון שהמידע לגבי תקלה זו אינו מופיע במסמכים שברשותי, איני יודע את התשובה. אתה מוזמן לשאול שאלה נוספת אם ברצונך לקבל פירוט על נושא אחר או אם לא קיבלת תשובה מספקת.</div>
+    </div>
+    <div class="cluster-section">
+      <h4>המלצת אימון</h4>
+      <div class="recommendation">לכתוב תזרים לטיפול בקובץ <strong>מסב</strong>: נתיב ייצור ברירת מחדל, חשבשבת נתקעת באמצע הפקה, הוספת תשלום לקובץ מסב מיום קודם, ושורת פקודת יומן שלא נוצרה לאחר מסב.</div>
+    </div>
+  </div>
+  <div class="cluster " id="cC5">
+    <div class="cluster-head">
+      <div class="title-block"><span class="rank-num">#11</span><h2>טוקן חשבוניות ישראל — ביטול, שינוי מסגרת, הרשאות</h2></div>
+      <div class="right-block">
+        <div class="spark-wrap"><svg width="52" height="46" style="overflow:visible"><rect x="0" y="16" width="10" height="14" fill="#6baed6" rx="2"/><text x="5" y="44" text-anchor="middle" font-size="8" fill="#666">2</text><rect x="12" y="23" width="10" height="7" fill="#4292c6" rx="2"/><text x="17" y="44" text-anchor="middle" font-size="8" fill="#666">1</text><rect x="24" y="23" width="10" height="7" fill="#2171b5" rx="2"/><text x="29" y="44" text-anchor="middle" font-size="8" fill="#666">1</text><rect x="36" y="2" width="10" height="28" fill="#084594" rx="2"/><text x="41" y="44" text-anchor="middle" font-size="8" fill="#666">4</text></svg></div>
+        <div class="count-block"><div class="count">8</div><div class="pct">2.5%</div></div>
+      </div>
+    </div>
+    <div class="cluster-meta">
+      <span class="meta-tag weeks"><span class="meta-label">שבועות:</span> 4/4</span>
+      <span class="trend trend-getting-worse">🔺 מחמיר</span>
+      <span class="meta-tag topic"><span class="meta-label">נושא:</span> מספר הקצאה, חשבוניות ישראל, טו</span>
+      <div class="week-detail"><span class="wk-chip">12–14.4: 2</span> <span class="wk-chip">26–30.4: 1</span> <span class="wk-chip">3–7.5: 1</span> <span class="wk-chip">10–14.5: 4</span></div>
+    </div>
+    <div class="cluster-section">
+      <h4>דוגמאות (6 מתוך 8)</h4>
+      <div class="examples-list">
+        <div class="example">
+          <span class="ex-id">10306258</span>
+          <span class="ex-week">12–14.4.26</span>
+          <span class="ex-q">"מחיקת תהליך חידוש טוקן. המשתמשת רוצה לדעת איך ניתן למחוק תהליך של חידוש טוקן."</span>
+        </div>
+        <div class="example">
+          <span class="ex-id">10308771</span>
+          <span class="ex-week">12–14.4.26</span>
+          <span class="ex-q">"לא צמליחה לעשות טוקן לחשבוניות ישראל, לא נפתח החלון. הלקוחה מנסה להפיק טוקן עבור חשבוניות ישראל אך החלון לא נפתח."</span>
+        </div>
+        <div class="example">
+          <span class="ex-id">10327707</span>
+          <span class="ex-week">26–30.4.26</span>
+          <span class="ex-q">"אני נכנס דרך תפריט הגדרות לקבלת טוקן חשבונית ישראל אולם המסך לא נפתח לי"</span>
+        </div>
+        <div class="example">
+          <span class="ex-id">10350705</span>
+          <span class="ex-week">3–7.5.26</span>
+          <span class="ex-q">"מבקשת טכנאי בעזר להתקנת טוקן. אני רוצה טכנאי זה לא עובד."</span>
+        </div>
+        <div class="example">
+          <span class="ex-id">10363708</span>
+          <span class="ex-week">10–14.5.26</span>
+          <span class="ex-q">"מבקשת לבטל טוקן בחברה"</span>
+        </div>
+        <div class="example">
+          <span class="ex-id">10361948</span>
+          <span class="ex-week">10–14.5.26</span>
+          <span class="ex-q">"אין לי הרשאה לתשלום ספקים שקים ידני   עדכון טוקן. המשתמשת ציינה שאין לה הרשאה לתשלום ספקים באמצעות שקים ידניים וגם בי..."</span>
+        </div>
+      </div>
+    </div>
+    <div class="cluster-section">
+      <h4>תשובת בוט אופיינית</h4>
+      <div class="bot-answer">אתה שואל לגבי מחיקת תהליך חידוש טוקן. מאחר שהמידע לגבי מחיקת התהליך אינו מופיע בתיעוד שברשותי, איני יודע את התשובה לכך. המידע הקיים מתייחס אך ורק לאופן העדכון וההארכה של הטוקן.</div>
+    </div>
+    <div class="cluster-section">
+      <h4>המלצת אימון</h4>
+      <div class="recommendation">לתעד פעולות <strong>ניהול הטוקן</strong>: ביטול, שינוי מסגרת (סכום), הוספת הרשאות לעובדים. הבוט יזהה כוונת משתמש (ביטול/חידוש/שינוי) לפני תשובה. לתעד ממשק <strong>חשבוניות ישראל</strong> להוספת הרשאה.</div>
+    </div>
+  </div>
+  <div class="cluster " id="cC2">
+    <div class="cluster-head">
+      <div class="title-block"><span class="rank-num">#12</span><h2>ביזבוקס — ייבוא תנועות ועדכון דפי בנק</h2></div>
+      <div class="right-block">
+        <div class="spark-wrap"><svg width="52" height="46" style="overflow:visible"><rect x="0" y="16" width="10" height="14" fill="#6baed6" rx="2"/><text x="5" y="44" text-anchor="middle" font-size="8" fill="#666">1</text><rect x="12" y="28" width="10" height="2" fill="#4292c6" rx="2"/><text x="17" y="44" text-anchor="middle" font-size="8" fill="#666">0</text><rect x="24" y="16" width="10" height="14" fill="#2171b5" rx="2"/><text x="29" y="44" text-anchor="middle" font-size="8" fill="#666">1</text><rect x="36" y="2" width="10" height="28" fill="#084594" rx="2"/><text x="41" y="44" text-anchor="middle" font-size="8" fill="#666">2</text></svg></div>
+        <div class="count-block"><div class="count">4</div><div class="pct">1.3%</div></div>
+      </div>
+    </div>
+    <div class="cluster-meta">
+      <span class="meta-tag weeks"><span class="meta-label">שבועות:</span> 3/4</span>
+      <span class="trend trend-getting-worse">🔺 מחמיר</span>
+      <span class="meta-tag topic"><span class="meta-label">נושא:</span> גיבויים וממשקים</span>
+      <div class="week-detail"><span class="wk-chip">12–14.4: 1</span> <span class="wk-chip">26–30.4: 0</span> <span class="wk-chip">3–7.5: 1</span> <span class="wk-chip">10–14.5: 2</span></div>
+    </div>
+    <div class="cluster-section">
+      <h4>דוגמאות (4 מתוך 4)</h4>
+      <div class="examples-list">
+        <div class="example">
+          <span class="ex-id">10301745</span>
+          <span class="ex-week">12–14.4.26</span>
+          <span class="ex-q">"אני מעבירה דפי בנק מביזיבוקס וכל הזמן שולח הודעת שגיאה למרות שנראה שדפי הבנק כן עוברים"</span>
+        </div>
+        <div class="example">
+          <span class="ex-id">10351842</span>
+          <span class="ex-week">3–7.5.26</span>
+          <span class="ex-q">"יש בעיה בקליטת תנועות בנק אוטומטיות דרך ביזיבוקס. המשתמשת מציינת שפתחה קריאה קודמת בנושא שלא נענתה ומבקשת יצירת קשר ב..."</span>
+        </div>
+        <div class="example">
+          <span class="ex-id">10364986</span>
+          <span class="ex-week">10–14.5.26</span>
+          <span class="ex-q">"לא נותן לעדכן תנועות דולר בביזבוקס. המשתמשת מדווחת על בעיה בעדכון תנועות דולריות במערכת ביזבוקס."</span>
+        </div>
+        <div class="example">
+          <span class="ex-id">10364825</span>
+          <span class="ex-week">10–14.5.26</span>
+          <span class="ex-q">"יבוא מביזיבוקס. המשתמש מבקש לדעת כיצד לבצע יבוא מביזיבוקס לתוכנה."</span>
+        </div>
+      </div>
+    </div>
+    <div class="cluster-section">
+      <h4>תשובת בוט אופיינית</h4>
+      <div class="bot-answer">את שואלת לגבי הודעת שגיאה שמתקבלת בעת העברת דפי בנק מביזיבוקס, למרות שנראה שדפי הבנק נקלטים בתוכנה. מאחר שהמידע בתיעוד שברשותי אינו כולל התייחסות ספציפית לממשק עם ביזיבוקס או לפתרון שגיאות הקשורות אליו, איני יודע מהי הסיבה להודעה זו. מוזמנת לשאול שאלות נוספות אם את זקוקה לפירוט נוסף או אם לא קיבלת ת</div>
+    </div>
+    <div class="cluster-section">
+      <h4>המלצת אימון</h4>
+      <div class="recommendation">לכתוב מדריך <strong>ביזבוקס</strong> ספציפי: חיבור ביזבוקס לחשבשבת, ייבוא דפי בנק דרכו, עדכון תנועות דולריות, ומה לעשות כשהייבוא נכשל.</div>
+    </div>
+  </div>
+
+  <div class="other-bucket" id="cOther">
+    <h3>📂 אחר — דפוסים בודדים (271 שיחות, 4 שבועות: [105, 57, 75, 34])</h3>
+    <div class="other-area"><h4>הנהלת חשבונות — פרוצדורות בסיסיות</h4>
+      <ul><li>התאמה אוטומטית, פיצול חשבונית בין סניפים, תאריכי שנת מס בקליטת מנה, ביטול הפקדה</li></ul></div>
+    <div class="other-area"><h4>טכני — בעיות תוכנה שהבוט לא ידע לטפל בהן</h4>
+      <ul><li>שינוי שנה בדוח מכירות, ביטול הוצאה מהקופה, אקטיבציה ורישיון למחשב חדש, פונטים שהשתנו</li></ul></div>
+    <div class="other-area"><h4>כללי ודוקה, קבלות תרומה, שאלות חסרות הקשר</h4>
+      <ul><li>מחיקת חברה בדוקה, מספר תנועות ב-WEB, סביבת טסטים, קבלת תרומה שוות כסף</li></ul></div>
+    <div class="other-rec">💡 <strong>המלצה:</strong> לפתח <strong>זרימת שאלת הבהרה</strong> לשאלות קצרות ("התאמה אוטומטית", "גיבוי", "דוח") — שאלה ממוקדת לפני הפניה לנציג. לתוסיף 5–8 פרוצדורות הנהלת חשבונות בסיסיות חסרות.</div>
+  </div>
+
+  <div class="footer">ניתוח 4 שבועות: 12.4 – 14.5.2026 &nbsp;|&nbsp; 585 שיחות בעייתיות &nbsp;|&nbsp; 12 אשכולות עיקריים &nbsp;|&nbsp; הופק: 17.5.2026</div>
+</div>
+<script>
+document.querySelectorAll('.cluster').forEach(function(card){
+  var head=card.querySelector('.cluster-head');
+  if(!head)return;
+  var ind=document.createElement('span');
+  ind.className='toggle-indicator';ind.textContent='▼';
+  head.appendChild(ind);
+  head.addEventListener('click',function(){card.classList.toggle('open')});
+});
+function openCluster(id){
+  var el=document.getElementById(id);
+  if(!el)return;
+  el.classList.add('open');
+  setTimeout(function(){el.scrollIntoView({behavior:'smooth',block:'start'})},80);
+}
+</script>
+</body>
+</html>
